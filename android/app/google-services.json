@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "34606072539",
+    "project_id": "astico-app",
+    "storage_bucket": "astico-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34606072539:android:5fd883fc8996f41762c2fe",
+        "android_client_info": {
+          "package_name": "aastico.hadetha.hbh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYwverN4QNJoqykF2XXlFc9-SdRhoFi2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34606072539:android:aa3b27575a958b4e62c2fe",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYwverN4QNJoqykF2XXlFc9-SdRhoFi2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
