@@ -128,15 +128,17 @@ class ApiProvider {
           break;
       }
       var decodedJson;
-      dio.interceptors.add(PrettyDioLogger(
-          request: true,
-          requestHeader: true,
-          requestBody: true,
-          responseBody: true,
-          responseHeader: false,
-          error: true,
-          compact: true,
-          maxWidth: 90));
+      if (kDebugMode) {
+        dio.interceptors.add(PrettyDioLogger(
+            request: true,
+            requestHeader: true,
+            requestBody: true,
+            responseBody: false,
+            responseHeader: false,
+            error: true,
+            compact: true,
+            maxWidth: 90));
+      }
 
       if (response.data is String) {
         debugPrint(response.toString());

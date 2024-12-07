@@ -28,7 +28,7 @@ class LogoHeadWidget extends StatelessWidget {
         ),
         Text(title,
             style: AppTextStyle.getBoldStyle(
-                color: AppColors.pink, fontSize: AppFontSize.size_20)),
+                color: AppColors.primary, fontSize: AppFontSize.size_20)),
         const SizedBox(
           height: AppPaddingSize.padding_5,
         ),

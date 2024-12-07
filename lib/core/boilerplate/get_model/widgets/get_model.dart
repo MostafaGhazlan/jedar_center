@@ -73,7 +73,7 @@ class _GetModelState<Model> extends State<GetModel<Model>> {
               height: widget.loadingHeight ?? 100.h,
               child: widget.loadingWidget ??
                   Shimmer.fromColors(
-                    baseColor: AppColors.pink,
+                    baseColor: AppColors.primary,
                     highlightColor: AppColors.babyBlue,
                     child: Image.asset(logoPngImage),
                   ),

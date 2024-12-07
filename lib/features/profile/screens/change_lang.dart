@@ -46,7 +46,7 @@ class ChangeLanguageScreen extends StatelessWidget {
                             S.of(context).Change_Language,
                             style: AppTextStyle.getMediumStyle(
                                 fontSize: AppFontSize.size_16,
-                                color: AppColors.pink),
+                                color: AppColors.primary),
                           ),
                           const SizedBox(
                             height: AppPaddingSize.padding_30,
@@ -74,7 +74,7 @@ class ChangeLanguageScreen extends StatelessWidget {
                                   style: AppTextStyle.getMediumStyle(
                                       fontSize: AppFontSize.size_16,
                                       color: prefs!.getString("lang") == "en"
-                                          ? AppColors.pink
+                                          ? AppColors.primary
                                           : AppColors.black14),
                                 ),
                               ),
@@ -106,7 +106,7 @@ class ChangeLanguageScreen extends StatelessWidget {
                                   style: AppTextStyle.getMediumStyle(
                                       fontSize: AppFontSize.size_16,
                                       color: prefs!.getString("lang") == "ar"
-                                          ? AppColors.pink
+                                          ? AppColors.primary
                                           : AppColors.black14),
                                 ),
                               ),

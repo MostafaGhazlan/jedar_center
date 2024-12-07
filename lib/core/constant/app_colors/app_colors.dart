@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 extension AppColors on ColorScheme {
   // light Theme Colors
-  static Color primary = const Color(0xff00B207);
   static Color lightPrimaryColor = const Color(0xffF2F1F6); //background color
   static Color lightSecondaryColor = const Color(0xffFFFFFF);
   static Color lightAccentColor = const Color(0xff0277FA);
@@ -64,5 +63,5 @@ extension AppColors on ColorScheme {
   static const Color greyA9 = Color(0xFFA9A9A9);
   static const Color babyBlue = Color(0xFF87CEEB);
   static const Color greyAD = Color(0xFFADADB4);
-  static const Color pink = Color(0xffee4a8f);
+  static const Color primary = Color(0xffdddd58);
 }

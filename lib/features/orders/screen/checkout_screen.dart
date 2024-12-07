@@ -72,7 +72,7 @@ class CheckoutScreen extends StatelessWidget {
                                           urlTemplate:
                                               "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                           userAgentPackageName:
-                                              "aastico.hadetha.hbh",
+                                              "jedar.hadetha.hbh",
                                         ),
                                         MarkerLayer(
                                           markers: [
@@ -208,7 +208,7 @@ class CheckoutScreen extends StatelessWidget {
                                 height: AppPaddingSize.padding_20,
                                 width: AppPaddingSize.padding_20,
                                 decoration: BoxDecoration(
-                                  color: AppColors.pink,
+                                  color: AppColors.primary,
                                   border: Border.all(
                                     color: AppColors.white,
                                   ),

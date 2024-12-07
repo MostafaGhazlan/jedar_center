@@ -71,7 +71,7 @@ class CachedImage extends StatelessWidget {
                 width: 200.w,
                 height: 100.h,
                 child: Shimmer.fromColors(
-                  baseColor: AppColors.pink,
+                  baseColor: AppColors.primary,
                   highlightColor: AppColors.babyBlue,
                   child: Image.asset(logoPngImage),
                 ),
@@ -88,7 +88,7 @@ class CachedImage extends StatelessWidget {
                 image: const AssetImage(logoPngImage),
                 clearMemoryCacheWhenDispose: true,
                 fit: BoxFit.contain,
-                color: color,
+                color: AppColors.primary,
               ),
             );
         }

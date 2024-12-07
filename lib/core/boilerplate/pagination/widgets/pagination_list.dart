@@ -107,7 +107,7 @@ class _PaginationListState<Model> extends State<PaginationList<Model>> {
                 height: widget.loadingHeight ?? 100.h,
                 child: widget.loadingWidget ??
                     Shimmer.fromColors(
-                      baseColor: widget.baseColor ?? AppColors.pink,
+                      baseColor: widget.baseColor ?? AppColors.primary,
                       highlightColor:
                           widget.highlightColor ?? AppColors.babyBlue,
                       child: Image.asset(logoPngImage),
@@ -148,7 +148,7 @@ class _PaginationListState<Model> extends State<PaginationList<Model>> {
           ? false
           : (widget.withPagination ?? widget.scrollDirection == Axis.vertical),
       header: const MaterialClassicHeader(
-        backgroundColor: AppColors.pink,
+        backgroundColor: AppColors.primary,
       ),
       controller: _refreshController,
       onRefresh: () async {

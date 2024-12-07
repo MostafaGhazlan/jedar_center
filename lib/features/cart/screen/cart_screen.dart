@@ -6,6 +6,7 @@ import 'package:flutter_application_1/core/constant/app_colors/app_colors.dart';
 import 'package:flutter_application_1/core/constant/app_images/app_images.dart';
 import 'package:flutter_application_1/core/constant/app_padding/app_padding.dart';
 import 'package:flutter_application_1/core/constant/text_styles/app_text_style.dart';
+import 'package:flutter_application_1/core/ui/dialogs/dialogs.dart';
 import 'package:flutter_application_1/core/ui/widgets/back_widget.dart';
 import 'package:flutter_application_1/core/ui/widgets/custom_button.dart';
 import 'package:flutter_application_1/core/utils/Navigation/navigation.dart';
@@ -30,6 +31,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double netAmount = 0;
+    bool isPromocode = false;
     return BlocBuilder<MatrixCubit, MatrixState>(
       builder: (context, state) {
         return DoubleBackToClose(
@@ -193,21 +196,37 @@ class CartScreen extends StatelessWidget {
                                         hintStyle: AppTextStyle.getMediumStyle(
                                             color: AppColors.black),
                                         textAlign: TextAlign.center,
-                                        borderColor: AppColors.pink,
+                                        borderColor: AppColors.primary,
                                         keyboardType: const TextInputType
                                             .numberWithOptions(),
                                       ),
                                     ),
                                     CreateModel<OrderModel>(
+                                        onSuccess: (model) {
+                                          netAmount = model.netAmount ?? 0;
+                                        },
+                                        onError: (val) {
+                                          Dialogs.showErrorSnackBar(
+                                              message: val.toString());
+                                          isPromocode = true;
+                                        },
                                         useCaseCallBack: (model) {
                                           return context
                                               .read<CartCubit>()
                                               .checkPromoCode();
                                         },
                                         withValidation: false,
-                                        child: CustomButton(
-                                          text: "Check",
-                                          w: 100.w,
+                                        child: Column(
+                                          children: [
+                                            isPromocode == true
+                                                ? Text(
+                                                    "the promotion ${context.read<CartCubit>().promoController} does not exist")
+                                                : const SizedBox.shrink(),
+                                            CustomButton(
+                                              text: "Check",
+                                              w: 100.w,
+                                            ),
+                                          ],
                                         ))
                                   ],
                                 ),
@@ -218,7 +237,7 @@ class CartScreen extends StatelessWidget {
                         child: Container(
                           width: 200.w,
                           decoration: BoxDecoration(
-                              color: AppColors.pink,
+                              color: AppColors.primary,
                               borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -302,7 +321,9 @@ class CartScreen extends StatelessWidget {
                             BlocBuilder<CartCubit, CartState>(
                               builder: (context, state) {
                                 return Text(
-                                  "${CacheHelper.cartItem?.fold<int>(0, (previousValue, element) => previousValue + ((element.productPrice?.addPrice1 ?? 0) * (element.quantity)).toInt())} ${S.of(context).IQD}",
+                                  netAmount == 0
+                                      ? "${CacheHelper.cartItem?.fold<int>(0, (previousValue, element) => previousValue + ((element.productPrice?.addPrice1 ?? 0) * (element.quantity)).toInt())} ${S.of(context).IQD}"
+                                      : "$netAmount",
                                   style: AppTextStyle.getMediumStyle(
                                     color: AppColors.black,
                                     fontSize: AppPaddingSize.padding_12,

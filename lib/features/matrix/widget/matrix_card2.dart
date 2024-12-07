@@ -48,7 +48,7 @@ class MatrixCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: ()async {
         Navigation.push(
           ProductDetailsScreen(
             model: matrixModel,
@@ -113,11 +113,11 @@ class MatrixCard2 extends StatelessWidget {
                                 return LikeButton(
                                   size: 25.r,
                                   bubblesColor: const BubblesColor(
-                                      dotPrimaryColor: AppColors.pink,
+                                      dotPrimaryColor: AppColors.primary,
                                       dotSecondaryColor: AppColors.babyBlue),
                                   circleColor: const CircleColor(
                                       start: AppColors.babyBlue,
-                                      end: AppColors.pink),
+                                      end: AppColors.primary),
                                   countPostion: CountPostion.bottom,
                                   isLiked: isFavorite,
                                   onTap: (isLiked) async {
@@ -138,7 +138,9 @@ class MatrixCard2 extends StatelessWidget {
                             ),
                           )
                         : const SizedBox.shrink(),
-                    matrixModel.products?[0].discountItem != null
+                    (matrixModel.products != null &&
+                            matrixModel.products!.isNotEmpty &&
+                            matrixModel.products![0].discountItem != null)
                         ? Padding(
                             padding:
                                 const EdgeInsets.all(AppPaddingSize.padding_10),
@@ -147,7 +149,8 @@ class MatrixCard2 extends StatelessWidget {
                                 return IconButton(
                                   onPressed: () {},
                                   icon: SvgPicture.asset(
-                                    color: discountImageColor ?? AppColors.pink,
+                                    color:
+                                        discountImageColor ?? AppColors.primary,
                                     discountImage,
                                     height: 25.r,
                                   ),
@@ -257,7 +260,11 @@ class MatrixCard2 extends StatelessWidget {
               padding: const EdgeInsets.only(
                   left: AppFontSize.size_8, right: AppFontSize.size_8),
               child: Text(
-                matrixModel.products![0].brand?.brandName ?? "brand Name",
+                (matrixModel.products != null &&
+                        matrixModel.products!.isNotEmpty)
+                    ? (matrixModel.products![0].brand?.brandName ??
+                        "brand Name")
+                    : "brand Name",
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.getMediumStyle(
@@ -272,7 +279,10 @@ class MatrixCard2 extends StatelessWidget {
                 right: AppFontSize.size_4,
               ),
               child: Text(
-                matrixModel.products![0].productName ?? "Product Name",
+                (matrixModel.products != null &&
+                        matrixModel.products!.isNotEmpty)
+                    ? (matrixModel.products![0].productName ?? "Product Name")
+                    : "Product Name",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.getMediumStyle(
@@ -281,7 +291,9 @@ class MatrixCard2 extends StatelessWidget {
                 ),
               ),
             ),
-            matrixModel.products?[0].discountItem == null
+            (matrixModel.products != null &&
+                    matrixModel.products!.isNotEmpty &&
+                    matrixModel.products![0].discountItem == null)
                 ? Padding(
                     padding: const EdgeInsets.only(
                         bottom: AppPaddingSize.padding_8,
@@ -289,11 +301,14 @@ class MatrixCard2 extends StatelessWidget {
                         right: AppFontSize.size_8),
                     child: Text(
                       CurrencyFormatter.formatCurrency(
-                        amount: double.tryParse((matrixModel
-                                        .products![0].productPrice?.addPrice1 ??
-                                    "25000")
-                                .toString()) ??
-                            25000.0,
+                        amount: (matrixModel.products != null &&
+                                matrixModel.products!.isNotEmpty)
+                            ? double.tryParse((matrixModel.products![0]
+                                            .productPrice?.addPrice1 ??
+                                        "25000")
+                                    .toString()) ??
+                                25000.0
+                            : 25000.0,
                         symbol: S.of(context).IQD,
                       ),
                       maxLines: 2,
@@ -312,11 +327,14 @@ class MatrixCard2 extends StatelessWidget {
                         right: AppFontSize.size_8),
                     child: Text(
                       CurrencyFormatter.formatCurrency(
-                        amount: double.tryParse((matrixModel
-                                        .products![0].productPrice?.addPrice1 ??
-                                    "25000")
-                                .toString()) ??
-                            25000.0,
+                        amount: (matrixModel.products != null &&
+                                matrixModel.products!.isNotEmpty)
+                            ? double.tryParse((matrixModel.products![0]
+                                            .productPrice?.addPrice1 ??
+                                        "25000")
+                                    .toString()) ??
+                                25000.0
+                            : 25000.0,
                         symbol: S.of(context).IQD,
                       ),
                       maxLines: 2,
@@ -330,83 +348,96 @@ class MatrixCard2 extends StatelessWidget {
                       ),
                     ),
                   ),
-            matrixModel.products?[0].discountItem == null
+            (matrixModel.products != null &&
+                    matrixModel.products!.isNotEmpty &&
+                    matrixModel.products![0].discountItem == null)
                 ? const SizedBox.shrink()
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      matrixModel.products?[0].discountItem?.discountType == 2
-                          ? Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: AppPaddingSize.padding_8,
-                                  left: AppPaddingSize.padding_8,
-                                  right: AppFontSize.size_8),
-                              child: Text(
-                                CurrencyFormatter.formatCurrency(
-                                  amount: (matrixModel.products?[0].productPrice
-                                              ?.addPrice1 ??
-                                          0) -
-                                      (matrixModel.products?[0].discountItem
-                                              ?.discountValue ??
-                                          0),
-                                  symbol: S.of(context).IQD,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.getSemiBoldStyle(
-                                  color: Colors.red[900]!,
-                                  fontSize: AppFontSize.size_12,
-                                ),
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: AppPaddingSize.padding_8,
-                                left: AppPaddingSize.padding_8,
-                                right: AppFontSize.size_8,
-                              ),
-                              child: Text(
-                                CurrencyFormatter.formatCurrency(
-                                  amount: (matrixModel.products?[0].productPrice
-                                              ?.addPrice1 ??
-                                          25000) *
-                                      (1 -
-                                          (matrixModel.products?[0].discountItem
-                                                      ?.discountValue ??
-                                                  0) /
-                                              100),
-                                  symbol: S.of(context).IQD,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.getSemiBoldStyle(
-                                  color: Colors.red[900]!,
-                                  fontSize: AppFontSize.size_12,
-                                ),
-                              ),
-                            ),
+                      (matrixModel.products != null &&
+                              matrixModel.products!.isNotEmpty)
+                          ? (matrixModel.products![0].discountItem
+                                      ?.discountType ==
+                                  2
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: AppPaddingSize.padding_8,
+                                    left: AppPaddingSize.padding_8,
+                                    right: AppFontSize.size_8,
+                                  ),
+                                  child: Text(
+                                    CurrencyFormatter.formatCurrency(
+                                      amount: (matrixModel.products![0]
+                                                  .productPrice?.addPrice1 ??
+                                              0) -
+                                          (matrixModel.products![0].discountItem
+                                                  ?.discountValue ??
+                                              0),
+                                      symbol: S.of(context).IQD,
+                                    ),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyle.getSemiBoldStyle(
+                                      color: Colors.red[900]!,
+                                      fontSize: AppFontSize.size_12,
+                                    ),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: AppPaddingSize.padding_8,
+                                    left: AppPaddingSize.padding_8,
+                                    right: AppFontSize.size_8,
+                                  ),
+                                  child: Text(
+                                    CurrencyFormatter.formatCurrency(
+                                      amount: (matrixModel.products![0]
+                                                  .productPrice?.addPrice1 ??
+                                              25000) *
+                                          (1 -
+                                              (matrixModel
+                                                          .products![0]
+                                                          .discountItem
+                                                          ?.discountValue ??
+                                                      0) /
+                                                  100),
+                                      symbol: S.of(context).IQD,
+                                    ),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyle.getSemiBoldStyle(
+                                      color: Colors.red[900]!,
+                                      fontSize: AppFontSize.size_12,
+                                    ),
+                                  ),
+                                ))
+                          : const SizedBox.shrink(),
                       Padding(
                         padding: const EdgeInsets.only(
-                            bottom: AppPaddingSize.padding_8,
-                            left: AppPaddingSize.padding_8,
-                            right: AppFontSize.size_8),
-                        child: matrixModel
-                                    .products?[0].discountItem?.discountType ==
-                                1
+                          bottom: AppPaddingSize.padding_8,
+                          left: AppPaddingSize.padding_8,
+                          right: AppFontSize.size_8,
+                        ),
+                        child: (matrixModel.products != null &&
+                                matrixModel.products!.isNotEmpty &&
+                                matrixModel.products![0].discountItem
+                                        ?.discountType ==
+                                    1)
                             ? Container(
                                 decoration: BoxDecoration(
-                                    color: discountContainerColor ??
-                                        const Color.fromARGB(
-                                            127, 235, 164, 185),
-                                    borderRadius: BorderRadius.circular(20)),
+                                  color: discountContainerColor ??
+                                      const Color.fromARGB(127, 235, 164, 185),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Text(
                                     CurrencyFormatter.formatCurrency(
                                       amount: double.tryParse((matrixModel
-                                                  .products?[0]
+                                                  .products![0]
                                                   .discountItem
                                                   ?.discountValue)
                                               .toString()) ??
@@ -414,33 +445,42 @@ class MatrixCard2 extends StatelessWidget {
                                       symbol: "%",
                                     ),
                                     style: AppTextStyle.getMediumStyle(
-                                        color: discountTextColor ??
-                                            Colors.red[900]!),
+                                      color:
+                                          discountTextColor ?? Colors.red[900]!,
+                                    ),
                                   ),
                                 ),
                               )
                             : Container(
                                 decoration: BoxDecoration(
-                                    color: discountContainerColor ??
-                                        const Color.fromARGB(
-                                            127, 235, 164, 185),
-                                    borderRadius: BorderRadius.circular(20)),
+                                  color: discountContainerColor ??
+                                      const Color.fromARGB(127, 235, 164, 185),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Text(
                                     CurrencyFormatter.formatCurrency(
-                                      amount: double.tryParse((matrixModel
-                                                  .products?[0]
-                                                  .discountItem
-                                                  ?.discountValue)
-                                              .toString()) ??
-                                          25000.0,
+                                      amount: (matrixModel.products != null &&
+                                              matrixModel
+                                                  .products!.isNotEmpty &&
+                                              matrixModel.products![0]
+                                                      .discountItem !=
+                                                  null)
+                                          ? double.tryParse((matrixModel
+                                                      .products![0]
+                                                      .discountItem
+                                                      ?.discountValue)
+                                                  .toString()) ??
+                                              25000.0
+                                          : 25000.0,
                                       symbol: S.of(context).IQD,
                                     ),
                                     style: AppTextStyle.getMediumStyle(
-                                        color: discountTextColor ??
-                                            Colors.red[900]!,
-                                        fontSize: AppPaddingSize.padding_10),
+                                      color:
+                                          discountTextColor ?? Colors.red[900]!,
+                                      fontSize: AppPaddingSize.padding_10,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),

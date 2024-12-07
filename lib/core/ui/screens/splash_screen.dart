@@ -22,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void initializeApp() async {
- 
     await GetLocation().getLocation();
     Navigation.pushAndRemoveUntil(const RootScreen());
   }
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           width: 200.w,
           height: 200.h,
           child: Shimmer.fromColors(
-            baseColor: AppColors.pink,
+            baseColor: AppColors.primary,
             highlightColor: AppColors.babyBlue,
             child: Image.asset(logoPngImage),
           ),

@@ -89,7 +89,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                         widget.screenTitleList[index],
                         style: AppTextStyle.getBoldStyle(
                           color: (tabIndex == index)
-                              ? AppColors.pink
+                              ? AppColors.primary
                               : AppColors.grey8E,
                           fontSize: AppFontSize.size_16,
                         ),

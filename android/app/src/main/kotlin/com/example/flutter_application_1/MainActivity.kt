@@ -1,4 +1,4 @@
-package aastico.hadetha.hbh
+package jedar.hadetha.hbh
 
 import io.flutter.embedding.android.FlutterActivity
 

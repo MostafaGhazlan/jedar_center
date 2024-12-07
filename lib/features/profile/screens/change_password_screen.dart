@@ -55,7 +55,7 @@ class ChangePasswordScreen extends StatelessWidget {
                               context.read<ProfileCubit>().oldObscure
                                   ? Icons.visibility_off_outlined
                                   : Icons.remove_red_eye,
-                              color: AppColors.pink),
+                              color: AppColors.primary),
                         ),
                         validator: (value) =>
                             AppValidators.validateFillFields(context, value),
@@ -79,7 +79,7 @@ class ChangePasswordScreen extends StatelessWidget {
                               context.read<ProfileCubit>().newObscure
                                   ? Icons.visibility_off_outlined
                                   : Icons.remove_red_eye,
-                              color: AppColors.pink),
+                              color: AppColors.primary),
                         ),
                         validator: (value) =>
                             AppValidators.validateFillFields(context, value),
@@ -103,7 +103,7 @@ class ChangePasswordScreen extends StatelessWidget {
                               context.read<ProfileCubit>().confirmObscure
                                   ? Icons.visibility_off_outlined
                                   : Icons.remove_red_eye,
-                              color: AppColors.pink),
+                              color: AppColors.primary),
                         ),
                         validator: (value) {},
                         title: S.of(context).Confirm_Password,

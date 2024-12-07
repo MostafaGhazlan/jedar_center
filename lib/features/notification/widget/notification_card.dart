@@ -17,7 +17,7 @@ class NotificationCard extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(AppPaddingSize.padding_8),
             child: CircleAvatar(
-              backgroundColor: AppColors.pink,
+              backgroundColor: AppColors.primary,
               child: Icon(
                 Icons.notifications,
                 color: AppColors.white,

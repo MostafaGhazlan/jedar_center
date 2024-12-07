@@ -31,7 +31,6 @@ class SignUpScreen extends StatelessWidget {
           body: Form(
             key: Keys.formKey,
             child: ListView(
-
               children: [
                 headerWidget ??
                     BackWidget(
@@ -57,8 +56,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 TextFieldSection(
                   onChanged: (p0) {
-                    context.read<AuthCubit>().registerParams.username =
-                        p0;
+                    context.read<AuthCubit>().registerParams.username = p0;
                   },
                   validator: (value) =>
                       AppValidators.validateFillFields(context, value),
@@ -79,12 +77,11 @@ class SignUpScreen extends StatelessWidget {
                         context.read<AuthCubit>().isObscure
                             ? Icons.visibility_off_outlined
                             : Icons.remove_red_eye,
-                        color: AppColors.pink),
+                        color: AppColors.primary),
                   ),
                   isObscure: context.read<AuthCubit>().isObscure,
                   onChanged: (p0) {
-                    context.read<AuthCubit>().registerParams.password =
-                        p0;
+                    context.read<AuthCubit>().registerParams.password = p0;
                   },
                   validator: (value) =>
                       AppValidators.validateFillFields(context, value),
@@ -137,8 +134,7 @@ class SignUpScreen extends StatelessWidget {
                     },
                     withValidation: true,
                     onTap: () {
-                      return (Keys.formKey.currentState?.validate() ??
-                          false);
+                      return (Keys.formKey.currentState?.validate() ?? false);
                     },
                     onSuccess: (RegisterModel model) async {
                       Dialogs.showSnackBar(

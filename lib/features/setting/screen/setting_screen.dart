@@ -133,7 +133,7 @@ class SettingScreen extends StatelessWidget {
               child: Icon(
                 icon,
                 size: AppPaddingSize.padding_20,
-                color: AppColors.pink,
+                color: AppColors.primary,
               ),
             ),
             Expanded(
@@ -151,7 +151,7 @@ class SettingScreen extends StatelessWidget {
 
   Widget buildDivider() {
     return const Divider(
-      color: AppColors.pink,
+      color: AppColors.primary,
       thickness: 1,
     );
   }

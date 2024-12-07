@@ -14,7 +14,13 @@ class BrandCard extends StatelessWidget {
   final void Function()? onTap;
   final Color? color;
   final BoxFit? fit;
-  const BrandCard({super.key, required this.brandModel, this.color, this.fit, this.onTap,});
+  const BrandCard({
+    super.key,
+    required this.brandModel,
+    this.color,
+    this.fit,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

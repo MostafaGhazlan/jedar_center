@@ -86,9 +86,7 @@ class CarouselWidget extends StatelessWidget {
                                 ),
                               ));
                             }
-                          : (onTap != null
-                              ? () => onTap?.call(index)
-                              : null), 
+                          : (onTap != null ? () => onTap?.call(index) : null),
                       child: Container(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: const BoxDecoration(
@@ -124,7 +122,7 @@ class CarouselWidget extends StatelessWidget {
                         width: 25,
                         decoration: const BoxDecoration(
                           shape: BoxShape.rectangle,
-                          color: AppColors.pink,
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.all(
                             Radius.circular(4),
                           ),

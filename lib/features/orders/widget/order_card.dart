@@ -153,7 +153,7 @@ class OrderCard extends StatelessWidget {
                   const Expanded(
                       child: Icon(
                     Icons.location_pin,
-                    color: AppColors.pink,
+                    color: AppColors.primary,
                   )),
                   Expanded(
                     child: Text(

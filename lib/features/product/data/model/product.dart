@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_application_1/features/brand/data/model/brand.dart';
 import 'package:flutter_application_1/features/product/data/model/discount_tem.dart';
 import 'package:flutter_application_1/features/product/data/model/suom_model.dart';
@@ -112,6 +114,13 @@ class ProductModel {
     this.isFavorite = false,
     this.isLoading = false,
   });
+
+     Map<String, dynamic> get parsedDescription {
+    if (description != null) {
+      return jsonDecode(description!);
+    }
+    return {};
+  }
 
   ProductModel.fromJson(Map<String, dynamic> json)
     : quantity = json['quantity'] ?? 1 {

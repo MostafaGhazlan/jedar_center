@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "aastico.hadetha.hbh"
+    namespace = "jedar.hadetha.hbh"
     compileSdk 35
     ndkVersion = "27.0.12077973"
 
@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "aastico.hadetha.hbh"
+        applicationId = "jedar.hadetha.hbh"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

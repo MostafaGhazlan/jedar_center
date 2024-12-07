@@ -38,8 +38,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-      },
+      onTap: () {},
       child: Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         width: 200.w,
@@ -86,10 +85,11 @@ class ProductCard extends StatelessWidget {
                           return LikeButton(
                             size: 25.r,
                             bubblesColor: const BubblesColor(
-                                dotPrimaryColor: AppColors.pink,
+                                dotPrimaryColor: AppColors.primary,
                                 dotSecondaryColor: AppColors.babyBlue),
                             circleColor: const CircleColor(
-                                start: AppColors.babyBlue, end: AppColors.pink),
+                                start: AppColors.babyBlue,
+                                end: AppColors.primary),
                             countPostion: CountPostion.bottom,
                             isLiked: isFavorite,
                             onTap: (isLiked) async {
@@ -113,7 +113,7 @@ class ProductCard extends StatelessWidget {
                                 return IconButton(
                                   onPressed: () {},
                                   icon: SvgPicture.asset(
-                                    color: AppColors.pink,
+                                    color: AppColors.primary,
                                     discountImage,
                                     height: 25.r,
                                   ),
@@ -335,24 +335,24 @@ class ProductCard extends StatelessWidget {
                             right: AppFontSize.size_8),
                         child: productModel.discountItem?.discountType == 1
                             ? Container(
-                                height: 15.h,
-                                width: 15.w,
                                 decoration: BoxDecoration(
                                     color: const Color.fromARGB(
                                         127, 235, 164, 185),
                                     borderRadius: BorderRadius.circular(20)),
-                                child: Center(
-                                    child: Text(
-                                  CurrencyFormatter.formatCurrency(
-                                    amount: double.tryParse((productModel
-                                                .discountItem?.discountValue)
-                                            .toString()) ??
-                                        25000.0,
-                                    symbol: "%",
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    CurrencyFormatter.formatCurrency(
+                                      amount: double.tryParse((productModel
+                                                  .discountItem?.discountValue)
+                                              .toString()) ??
+                                          25000.0,
+                                      symbol: "%",
+                                    ),
+                                    style: AppTextStyle.getMediumStyle(
+                                        color: Colors.red[900]!),
                                   ),
-                                  style: AppTextStyle.getMediumStyle(
-                                      color: Colors.red[900]!),
-                                )),
+                                ),
                               )
                             : Container(
                                 decoration: BoxDecoration(

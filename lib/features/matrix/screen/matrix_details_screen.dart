@@ -21,6 +21,7 @@ import '../../../core/ui/dialogs/dialogs.dart';
 import '../../../core/ui/widgets/carousel_slider.dart';
 import '../../../core/utils/Navigation/navigation.dart';
 import '../../../core/utils/functions/currency_formatter.dart';
+import '../../../core/utils/functions/parsed_description.dart';
 import '../../../generated/l10n.dart';
 import '../../brand/screen/matrix_by_brand_screen.dart';
 import '../../home/cubit/cubit/home_cubit.dart';
@@ -44,11 +45,19 @@ class ProductDetailsScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
               scrolledUnderElevation: 0,
               title: Text(
-                model.products![context.read<MatrixCubit>().selectedIndex].brand
-                        ?.brandName ??
-                    "",
+                (model.products != null &&
+                        model.products!.isNotEmpty &&
+                        context.read<MatrixCubit>().selectedIndex >= 0 &&
+                        context.read<MatrixCubit>().selectedIndex <
+                            model.products!.length)
+                    ? model.products![context.read<MatrixCubit>().selectedIndex]
+                            .brand?.brandName ??
+                        ""
+                    : "",
                 style: AppTextStyle.getBoldStyle(
-                    color: AppColors.black, fontSize: AppFontSize.size_15),
+                  color: AppColors.black,
+                  fontSize: AppFontSize.size_15,
+                ),
               )),
           body: BlocBuilder<MatrixCubit, MatrixState>(
             builder: (context, state) {
@@ -86,13 +95,33 @@ class ProductDetailsScreen extends StatelessWidget {
                             isZoomable: true,
                             autoPlay: true,
                             photoFit: BoxFit.contain,
-                            images: model
-                                .products![
-                                    context.read<MatrixCubit>().selectedIndex]
-                                .documents!
-                                .map((doc) {
-                              return '$baseUrl/${doc.filePath}/${doc.fileName}';
-                            }).toList(),
+                            images: (model.products != null &&
+                                    model.products!.isNotEmpty &&
+                                    context.read<MatrixCubit>().selectedIndex >=
+                                        0 &&
+                                    context.read<MatrixCubit>().selectedIndex <
+                                        model.products!.length &&
+                                    model
+                                            .products![context
+                                                .read<MatrixCubit>()
+                                                .selectedIndex]
+                                            .documents !=
+                                        null &&
+                                    model
+                                        .products![context
+                                            .read<MatrixCubit>()
+                                            .selectedIndex]
+                                        .documents!
+                                        .isNotEmpty)
+                                ? model
+                                    .products![context
+                                        .read<MatrixCubit>()
+                                        .selectedIndex]
+                                    .documents!
+                                    .map((doc) {
+                                    return '$baseUrl/${doc.filePath}/${doc.fileName}';
+                                  }).toList()
+                                : [],
                             controller: CarouselSliderController(),
                             onPageChanged: (index) => context
                                 .read<HomeCubit>()
@@ -143,15 +172,33 @@ class ProductDetailsScreen extends StatelessWidget {
                                       imageUrl: imageUrl,
                                     ),
                                     Text(
-                                      model
-                                              .products![context
-                                                  .read<MatrixCubit>()
-                                                  .selectedIndex]
-                                              .brand
-                                              ?.brandName ??
-                                          "",
+                                      (model.products != null &&
+                                              model.products!.isNotEmpty &&
+                                              context
+                                                      .read<MatrixCubit>()
+                                                      .selectedIndex >=
+                                                  0 &&
+                                              context
+                                                      .read<MatrixCubit>()
+                                                      .selectedIndex <
+                                                  model.products!.length &&
+                                              model
+                                                      .products![context
+                                                          .read<MatrixCubit>()
+                                                          .selectedIndex]
+                                                      .brand !=
+                                                  null)
+                                          ? model
+                                                  .products![context
+                                                      .read<MatrixCubit>()
+                                                      .selectedIndex]
+                                                  .brand!
+                                                  .brandName ??
+                                              ""
+                                          : "",
                                       style: AppTextStyle.getMediumStyle(
-                                          color: AppColors.pink),
+                                        color: AppColors.primary,
+                                      ),
                                     ),
                                     Text(
                                       S.of(context).click_here,
@@ -179,10 +226,21 @@ class ProductDetailsScreen extends StatelessWidget {
                                   ),
                                   BlocBuilder<MatrixCubit, MatrixState>(
                                     builder: (context, state) {
-                                      var selectedProduct = model.products?[
-                                          context
-                                              .read<MatrixCubit>()
-                                              .selectedIndex];
+                                      var selectedProduct =
+                                          (model.products != null &&
+                                                  model.products!.isNotEmpty &&
+                                                  context
+                                                          .read<MatrixCubit>()
+                                                          .selectedIndex >=
+                                                      0 &&
+                                                  context
+                                                          .read<MatrixCubit>()
+                                                          .selectedIndex <
+                                                      model.products!.length)
+                                              ? model.products![context
+                                                  .read<MatrixCubit>()
+                                                  .selectedIndex]
+                                              : null;
 
                                       bool isFavorite = CacheHelper.wishlist
                                               ?.any((item) =>
@@ -192,12 +250,12 @@ class ProductDetailsScreen extends StatelessWidget {
 
                                       return LikeButton(
                                         bubblesColor: const BubblesColor(
-                                            dotPrimaryColor: AppColors.pink,
+                                            dotPrimaryColor: AppColors.primary,
                                             dotSecondaryColor:
                                                 AppColors.babyBlue),
                                         circleColor: const CircleColor(
                                             start: AppColors.babyBlue,
-                                            end: AppColors.pink),
+                                            end: AppColors.primary),
                                         size: 15.r,
                                         countPostion: CountPostion.bottom,
                                         isLiked: isFavorite,
@@ -245,15 +303,23 @@ class ProductDetailsScreen extends StatelessWidget {
                               left: AppPaddingSize.padding_10,
                               top: AppPaddingSize.padding_20),
                           child: Text(
-                            model
-                                    .products![context
-                                        .read<MatrixCubit>()
-                                        .selectedIndex]
-                                    .productName ??
-                                S.of(context).description,
+                            (model.products != null &&
+                                    model.products!.isNotEmpty &&
+                                    context.read<MatrixCubit>().selectedIndex >=
+                                        0 &&
+                                    context.read<MatrixCubit>().selectedIndex <
+                                        model.products!.length)
+                                ? model
+                                        .products![context
+                                            .read<MatrixCubit>()
+                                            .selectedIndex]
+                                        .productName ??
+                                    S.of(context).description
+                                : S.of(context).description,
                             style: AppTextStyle.getMediumStyle(
-                                color: AppColors.black,
-                                fontSize: AppPaddingSize.padding_18),
+                              color: AppColors.black,
+                              fontSize: AppPaddingSize.padding_18,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -333,7 +399,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   .selectedIndex ==
                                               index
                                           ? Border.all(
-                                              color: AppColors.pink, width: 1.5)
+                                              color: AppColors.primary,
+                                              width: 1.5)
                                           : null,
                                     ),
                                     child: Padding(
@@ -357,12 +424,18 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        model
-                                    .products?[context
-                                        .read<MatrixCubit>()
-                                        .selectedIndex]
-                                    .productSize !=
-                                null
+                        (model.products != null &&
+                                model.products!.isNotEmpty &&
+                                context.read<MatrixCubit>().selectedIndex >=
+                                    0 &&
+                                context.read<MatrixCubit>().selectedIndex <
+                                    model.products!.length &&
+                                model
+                                        .products![context
+                                            .read<MatrixCubit>()
+                                            .selectedIndex]
+                                        .productSize !=
+                                    null)
                             ? Align(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
@@ -401,12 +474,18 @@ class ProductDetailsScreen extends StatelessWidget {
                         const Divider(
                           color: AppColors.greyE5,
                         ),
-                        model
-                                    .products![context
-                                        .read<MatrixCubit>()
-                                        .selectedIndex]
-                                    .discountItem ==
-                                null
+                        (model.products != null &&
+                                model.products!.isNotEmpty &&
+                                context.read<MatrixCubit>().selectedIndex >=
+                                    0 &&
+                                context.read<MatrixCubit>().selectedIndex <
+                                    model.products!.length &&
+                                model
+                                        .products![context
+                                            .read<MatrixCubit>()
+                                            .selectedIndex]
+                                        .discountItem ==
+                                    null)
                             ? Padding(
                                 padding: const EdgeInsets.only(
                                     bottom: AppPaddingSize.padding_8,
@@ -437,11 +516,16 @@ class ProductDetailsScreen extends StatelessWidget {
                                     right: AppFontSize.size_8),
                                 child: Text(
                                   CurrencyFormatter.formatCurrency(
-                                    amount: double.tryParse((model.products![0]
-                                                    .productPrice?.addPrice1 ??
-                                                "25000")
-                                            .toString()) ??
-                                        25000.0,
+                                    amount: (model.products != null &&
+                                            model.products!.isNotEmpty)
+                                        ? double.tryParse((model
+                                                        .products![0]
+                                                        .productPrice
+                                                        ?.addPrice1 ??
+                                                    "25000")
+                                                .toString()) ??
+                                            25000.0
+                                        : 25000.0,
                                     symbol: S.of(context).IQD,
                                   ),
                                   maxLines: 2,
@@ -455,139 +539,161 @@ class ProductDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                        model
-                                    .products![context
-                                        .read<MatrixCubit>()
-                                        .selectedIndex]
-                                    .discountItem ==
-                                null
+                        (model.products != null &&
+                                model.products!.isNotEmpty &&
+                                context.read<MatrixCubit>().selectedIndex >=
+                                    0 &&
+                                context.read<MatrixCubit>().selectedIndex <
+                                    model.products!.length &&
+                                model
+                                        .products![context
+                                            .read<MatrixCubit>()
+                                            .selectedIndex]
+                                        .discountItem ==
+                                    null)
                             ? const SizedBox.shrink()
                             : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  model.products?[0].discountItem
-                                              ?.discountType ==
-                                          2
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: AppPaddingSize.padding_8,
-                                              left: AppPaddingSize.padding_8,
-                                              right: AppFontSize.size_8),
-                                          child: Text(
-                                            CurrencyFormatter.formatCurrency(
-                                              amount: (model
-                                                          .products?[0]
-                                                          .productPrice
-                                                          ?.addPrice1 ??
-                                                      0) -
-                                                  (model
-                                                          .products?[0]
-                                                          .discountItem
-                                                          ?.discountValue ??
-                                                      0),
-                                              symbol: S.of(context).IQD,
-                                            ),
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            overflow: TextOverflow.ellipsis,
-                                            style:
-                                                AppTextStyle.getSemiBoldStyle(
-                                              color: Colors.red[900]!,
-                                              fontSize: AppFontSize.size_16,
-                                            ),
-                                          ),
-                                        )
-                                      : Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: AppPaddingSize.padding_8,
-                                            left: AppPaddingSize.padding_8,
-                                            right: AppFontSize.size_8,
-                                          ),
-                                          child: Text(
-                                            CurrencyFormatter.formatCurrency(
-                                              amount: (model
-                                                          .products?[0]
-                                                          .productPrice
-                                                          ?.addPrice1 ??
-                                                      25000) *
-                                                  (1 -
-                                                      (model
-                                                                  .products?[0]
-                                                                  .discountItem
-                                                                  ?.discountValue ??
-                                                              0) /
-                                                          100),
-                                              symbol: S.of(context).IQD,
-                                            ),
-                                            maxLines: 2,
-                                            textAlign: TextAlign.center,
-                                            overflow: TextOverflow.ellipsis,
-                                            style:
-                                                AppTextStyle.getSemiBoldStyle(
-                                              color: Colors.red[900]!,
-                                              fontSize: AppFontSize.size_16,
-                                            ),
-                                          ),
-                                        ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: AppPaddingSize.padding_8,
-                                        left: AppPaddingSize.padding_8,
-                                        right: AppFontSize.size_8),
-                                    child: model.products?[0].discountItem
-                                                ?.discountType ==
-                                            1
-                                        ? Container(
-                                            height: 20.h,
-                                            width: 40.w,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    127, 235, 164, 185),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: Center(
-                                                child: Text(
+                                  if (model.products != null &&
+                                      model.products!.isNotEmpty &&
+                                      model.products![0].discountItem != null)
+                                    model.products![0].discountItem!
+                                                .discountType ==
+                                            2
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom:
+                                                    AppPaddingSize.padding_8,
+                                                left: AppPaddingSize.padding_8,
+                                                right: AppFontSize.size_8),
+                                            child: Text(
                                               CurrencyFormatter.formatCurrency(
-                                                amount: double.tryParse((model
-                                                            .products?[0]
-                                                            .discountItem
-                                                            ?.discountValue)
-                                                        .toString()) ??
-                                                    25000.0,
-                                                symbol: "%",
-                                              ),
-                                              style:
-                                                  AppTextStyle.getMediumStyle(
-                                                      color: Colors.red[900]!),
-                                            )),
-                                          )
-                                        : Container(
-                                            height: 20.h,
-                                            width: 40.w,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    127, 235, 164, 185),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: Center(
-                                                child: Text(
-                                              CurrencyFormatter.formatCurrency(
-                                                amount: double.tryParse((model
-                                                            .products?[0]
-                                                            .discountItem
-                                                            ?.discountValue)
-                                                        .toString()) ??
-                                                    25000.0,
+                                                amount: (model
+                                                            .products![0]
+                                                            .productPrice
+                                                            ?.addPrice1 ??
+                                                        0) -
+                                                    (model
+                                                            .products![0]
+                                                            .discountItem!
+                                                            .discountValue ??
+                                                        0),
                                                 symbol: S.of(context).IQD,
                                               ),
-                                              style:
-                                                  AppTextStyle.getMediumStyle(
-                                                      color: Colors.red[900]!),
+                                              maxLines: 2,
                                               textAlign: TextAlign.center,
-                                            )),
+                                              overflow: TextOverflow.ellipsis,
+                                              style:
+                                                  AppTextStyle.getSemiBoldStyle(
+                                                color: Colors.red[900]!,
+                                                fontSize: AppFontSize.size_16,
+                                              ),
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: AppPaddingSize.padding_8,
+                                              left: AppPaddingSize.padding_8,
+                                              right: AppFontSize.size_8,
+                                            ),
+                                            child: Text(
+                                              CurrencyFormatter.formatCurrency(
+                                                amount: (model
+                                                            .products![0]
+                                                            .productPrice
+                                                            ?.addPrice1 ??
+                                                        25000) *
+                                                    (1 -
+                                                        (model
+                                                                    .products![
+                                                                        0]
+                                                                    .discountItem
+                                                                    ?.discountValue ??
+                                                                0) /
+                                                            100),
+                                                symbol: S.of(context).IQD,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.center,
+                                              overflow: TextOverflow.ellipsis,
+                                              style:
+                                                  AppTextStyle.getSemiBoldStyle(
+                                                color: Colors.red[900]!,
+                                                fontSize: AppFontSize.size_16,
+                                              ),
+                                            ),
                                           ),
-                                  ),
+                                  if (model.products != null &&
+                                      model.products!.isNotEmpty &&
+                                      model.products![0].discountItem != null)
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: AppPaddingSize.padding_8,
+                                          left: AppPaddingSize.padding_8,
+                                          right: AppFontSize.size_8),
+                                      child: model.products![0].discountItem!
+                                                  .discountType ==
+                                              1
+                                          ? Container(
+                                              height: 20.h,
+                                              width: 40.w,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      127, 235, 164, 185),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Center(
+                                                  child: Text(
+                                                CurrencyFormatter
+                                                    .formatCurrency(
+                                                  amount: double.tryParse((model
+                                                              .products![0]
+                                                              .discountItem
+                                                              ?.discountValue)
+                                                          .toString()) ??
+                                                      25000.0,
+                                                  symbol: "%",
+                                                ),
+                                                style:
+                                                    AppTextStyle.getMediumStyle(
+                                                        color: Colors.red[900]!,
+                                                        fontSize: AppFontSize
+                                                            .size_12),
+                                              )),
+                                            )
+                                          : Container(
+                                              height: 20.h,
+                                              width: 40.w,
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      127, 235, 164, 185),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Center(
+                                                  child: Text(
+                                                CurrencyFormatter
+                                                    .formatCurrency(
+                                                  amount: double.tryParse((model
+                                                              .products![0]
+                                                              .discountItem
+                                                              ?.discountValue)
+                                                          .toString()) ??
+                                                      25000.0,
+                                                  symbol: S.of(context).IQD,
+                                                ),
+                                                style:
+                                                    AppTextStyle.getMediumStyle(
+                                                        color: Colors.red[900]!,
+                                                        fontSize: AppFontSize
+                                                            .size_12),
+                                                textAlign: TextAlign.center,
+                                              )),
+                                            ),
+                                    ),
                                 ],
                               ),
                         SizedBox(
@@ -596,39 +702,49 @@ class ProductDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 200.h,
                           child: TabBarWidget(
-                              tabLength: 3,
-                              screenList: List.generate(3, (index) {
-                                return SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(
-                                            AppPaddingSize.padding_8),
-                                        child: Text(
-                                          model
-                                                  .products![context
-                                                      .read<MatrixCubit>()
-                                                      .selectedIndex]
-                                                  .description ??
-                                              "",
-                                          style: AppTextStyle.getMediumStyle(
-                                            color: AppColors.black,
-                                          ),
+                            tabLength: 3,
+                            screenList: List.generate(3, (index) {
+                              return SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(
+                                          AppPaddingSize.padding_8),
+                                      child: Text(
+                                        (model.products != null &&
+                                                model.products!.isNotEmpty &&
+                                                context
+                                                        .read<MatrixCubit>()
+                                                        .selectedIndex >=
+                                                    0 &&
+                                                context
+                                                        .read<MatrixCubit>()
+                                                        .selectedIndex <
+                                                    model.products!.length)
+                                            ? getTabContent(
+                                                model.products![context
+                                                    .read<MatrixCubit>()
+                                                    .selectedIndex],
+                                                index)
+                                            : "",
+                                        style: AppTextStyle.getMediumStyle(
+                                          color: AppColors.black,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                              screenTitleList: [
-                                S.of(context).description,
-                                S.of(context).how_use_it,
-                                S.of(context).specifications
-                              ],
-                              isScrollable: true,
-                              isIndicatorColor: true),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                            screenTitleList: [
+                              S.of(context).description,
+                              S.of(context).how_use_it,
+                              S.of(context).specifications,
+                            ],
+                            isScrollable: true,
+                            isIndicatorColor: true,
+                          ),
                         ),
                         SizedBox(
                           height: 100.h,

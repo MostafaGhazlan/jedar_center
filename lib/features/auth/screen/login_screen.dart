@@ -74,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                         context.read<AuthCubit>().isObscure
                             ? Icons.visibility_off_outlined
                             : Icons.remove_red_eye,
-                        color: AppColors.pink),
+                        color: AppColors.primary),
                   ),
                   isObscure: context.read<AuthCubit>().isObscure,
                   onChanged: (p0) =>
@@ -183,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(S.of(context).Create_Account,
                             style: AppTextStyle.getBoldStyle(
-                                color: AppColors.pink,
+                                color: AppColors.primary,
                                 fontSize: AppFontSize.size_13)),
                       ),
                     ),

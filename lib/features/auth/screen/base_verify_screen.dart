@@ -77,11 +77,10 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       BackWidget(
+                      BackWidget(
                         titleWidget: LogoHeadWidget(
                           title: S.of(context).verification_code,
-                          subTitle:
-                              S.of(context).sent_verification,
+                          subTitle: S.of(context).sent_verification,
                         ),
                       ),
                       Padding(
@@ -119,7 +118,6 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                                   },
                                   useCaseCallBack: (model) {
                                     return null;
-
                                   },
                                   withValidation: false,
                                   child: Padding(
@@ -127,7 +125,7 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                                         const EdgeInsets.symmetric(vertical: 5),
                                     child: Text(S.of(context).Resend_code,
                                         style: AppTextStyle.getBoldStyle(
-                                            color: AppColors.pink,
+                                            color: AppColors.primary,
                                             fontSize: AppFontSize.size_13)),
                                   ))
                               : const SizedBox(),
@@ -157,7 +155,7 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                           return null;
                         },
                         withValidation: false,
-                        child:  CustomButton(
+                        child: CustomButton(
                           text: S.of(context).verification,
                         ),
                       ),

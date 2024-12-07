@@ -57,7 +57,7 @@ abstract class RemoteDataSource {
         converter2: converter2,
         converter: converter);
     debugPrint(response.toString()); //instanceModel
-
+      
     if (kDebugMode) {
       print('is right : ${response.isRight()}');
     }

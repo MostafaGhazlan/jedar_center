@@ -15,7 +15,6 @@ import '../../../core/constant/text_styles/font_size.dart';
 import '../../../core/utils/functions/currency_formatter.dart';
 import '../../../generated/l10n.dart';
 import '../../matrix/cubit/matrix_cubit.dart';
-import '../../matrix/screen/matrix_details_screen.dart';
 
 class CartCard extends StatelessWidget {
   final Function()? whenSuccess;
@@ -35,9 +34,9 @@ class CartCard extends StatelessWidget {
     return BlocBuilder<MatrixCubit, MatrixState>(builder: (context, state) {
       return InkWell(
         onTap: () {
-          Navigation.push(ProductDetailsScreen(
-            model: context.read<MatrixCubit>().matrix!,
-          ));
+          // Navigation.push(ProductDetailsScreen(
+          //   model: context.read<MatrixCubit>().matrix!,
+          // ));
         },
         child: Card(
           color: AppColors.white,
@@ -46,10 +45,10 @@ class CartCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(AppPaddingSize.padding_8),
                 child: CachedImage(
-                  imageUrl: matrixModel.documents != null && matrixModel.documents!.isNotEmpty
+                  imageUrl: matrixModel.documents != null &&
+                          matrixModel.documents!.isNotEmpty
                       ? "$baseUrl${matrixModel.documents!.first.filePath}/${matrixModel.documents!.first.fileName}"
                       : logoPngImage,
-
                   fit: BoxFit.contain,
                   height: 50.h,
                 ),
@@ -70,7 +69,6 @@ class CartCard extends StatelessWidget {
                       ),
                     ),
                     Row(
-
                       children: [
                         Expanded(
                           child: Padding(
@@ -99,9 +97,10 @@ class CartCard extends StatelessWidget {
                                   dialogTitle:
                                       S.of(context).Confirm_deletion_title,
                                   message: S.of(context).Confirm_deletion,
-                                  image:
-                                      "$baseUrl${matrixModel.documents?.first.filePath}/${matrixModel.documents?.first.fileName}",
-                                  onConfirm: () async {
+                                  image: matrixModel.documents != null &&
+                                          matrixModel.documents!.isNotEmpty
+                                      ? "$baseUrl${matrixModel.documents!.first.filePath}/${matrixModel.documents!.first.fileName}"
+                                      : logoPngImage, onConfirm: () async {
                                 await CacheHelper.cartBox.deleteAt(
                                   CacheHelper.cartBox.values
                                       .toList()
@@ -130,55 +129,68 @@ class CartCard extends StatelessWidget {
                         Expanded(
                           child: matrixModel.discountItem == null
                               ? Padding(
-                            padding: const EdgeInsets.only(
-                                left: AppPaddingSize.padding_8,
-                                right: AppPaddingSize.padding_8,
-                                bottom: AppPaddingSize.padding_8),
-                            child: Text(
-                              CurrencyFormatter.formatCurrency(amount: (matrixModel.productPrice?.addPrice1! ?? 0) * matrixModel.quantity, symbol: S.of(context).IQD),
-                              style: AppTextStyle.getMediumStyle(
-                                  color: AppColors.black,
-                                  fontSize: AppPaddingSize.padding_10),
-                            ),
-                          )
+                                  padding: const EdgeInsets.only(
+                                      left: AppPaddingSize.padding_8,
+                                      right: AppPaddingSize.padding_8,
+                                      bottom: AppPaddingSize.padding_8),
+                                  child: Text(
+                                    CurrencyFormatter.formatCurrency(
+                                        amount: (matrixModel
+                                                    .productPrice?.addPrice1! ??
+                                                0) *
+                                            matrixModel.quantity,
+                                        symbol: S.of(context).IQD),
+                                    style: AppTextStyle.getMediumStyle(
+                                        color: AppColors.black,
+                                        fontSize: AppPaddingSize.padding_10),
+                                  ),
+                                )
                               : matrixModel.discountItem?.discountType == 2
-                              ? Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: AppPaddingSize.padding_8,
-                                left: AppPaddingSize.padding_8,
-                                right: AppFontSize.size_8),
-                            child: Text(
-                              CurrencyFormatter.formatCurrency(
-                                amount: (matrixModel.productPrice?.addPrice1 ?? 0) -
-                                    (matrixModel.discountItem?.discountValue ?? 0),
-                                symbol: S.of(context).IQD,
-                              ),
-
-
-
-                              style: AppTextStyle.getMediumStyle(
-                                  color: AppColors.black,
-                                  fontSize: AppPaddingSize.padding_10),
-                            ),
-                          )
-                              : Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: AppPaddingSize.padding_8,
-                              left: AppPaddingSize.padding_8,
-                              right: AppFontSize.size_8,
-                            ),
-                            child: Text(
-                              CurrencyFormatter.formatCurrency(
-                                amount: (matrixModel.productPrice?.addPrice1 ?? 25000) *
-                                    (1 - (matrixModel.discountItem?.discountValue ?? 0) / 100),
-                                symbol: S.of(context).IQD,
-                              ),
-
-                              style: AppTextStyle.getMediumStyle(
-                                  color: AppColors.black,
-                                  fontSize: AppPaddingSize.padding_10),
-                            ),
-                          ),
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: AppPaddingSize.padding_8,
+                                          left: AppPaddingSize.padding_8,
+                                          right: AppFontSize.size_8),
+                                      child: Text(
+                                        CurrencyFormatter.formatCurrency(
+                                          amount: (matrixModel.productPrice
+                                                      ?.addPrice1 ??
+                                                  0) -
+                                              (matrixModel.discountItem
+                                                      ?.discountValue ??
+                                                  0),
+                                          symbol: S.of(context).IQD,
+                                        ),
+                                        style: AppTextStyle.getMediumStyle(
+                                            color: AppColors.black,
+                                            fontSize:
+                                                AppPaddingSize.padding_10),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: AppPaddingSize.padding_8,
+                                        left: AppPaddingSize.padding_8,
+                                        right: AppFontSize.size_8,
+                                      ),
+                                      child: Text(
+                                        CurrencyFormatter.formatCurrency(
+                                          amount: (matrixModel.productPrice
+                                                      ?.addPrice1 ??
+                                                  25000) *
+                                              (1 -
+                                                  (matrixModel.discountItem
+                                                              ?.discountValue ??
+                                                          0) /
+                                                      100),
+                                          symbol: S.of(context).IQD,
+                                        ),
+                                        style: AppTextStyle.getMediumStyle(
+                                            color: AppColors.black,
+                                            fontSize:
+                                                AppPaddingSize.padding_10),
+                                      ),
+                                    ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -191,7 +203,8 @@ class CartCard extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () async {
-                                    await CacheHelper.addToCart(matrixModel, true);
+                                    await CacheHelper.addToCart(
+                                        matrixModel, true);
                                     if (context.mounted) {
                                       context.read<MatrixCubit>().zeroCounter();
                                     }
@@ -210,10 +223,13 @@ class CartCard extends StatelessWidget {
                                 IconButton(
                                   onPressed: () async {
                                     if (matrixModel.quantity > 0) {
-                                      await CacheHelper.addToCart(matrixModel, false);
+                                      await CacheHelper.addToCart(
+                                          matrixModel, false);
 
                                       if (context.mounted) {
-                                        context.read<MatrixCubit>().zeroCounter();
+                                        context
+                                            .read<MatrixCubit>()
+                                            .zeroCounter();
                                       }
                                     }
                                   },
@@ -228,7 +244,6 @@ class CartCard extends StatelessWidget {
                         ),
                       ],
                     )
-
                   ],
                 ),
               ),

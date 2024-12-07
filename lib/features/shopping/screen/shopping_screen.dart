@@ -137,7 +137,7 @@ class ShoppingScreen extends StatelessWidget {
                                           list[index]
                                       ? 48.h
                                       : 0.h,
-                                  color: AppColors.pink,
+                                  color: AppColors.primary,
                                 ),
                               ],
                             ),

@@ -73,7 +73,7 @@ class MatrixByBrandScreen extends StatelessWidget {
             child: PaginationList<MatrixModel>(
               loadingHeight: 200.h,
               baseColor: color == null || color == "#ffffff"
-                  ? AppColors.pink
+                  ? AppColors.primary
                   : Colors.white,
               highlightColor: color == null || color == "#ffffff"
                   ? AppColors.babyBlue
@@ -107,7 +107,7 @@ class MatrixByBrandScreen extends StatelessWidget {
                         ? const Color.fromARGB(127, 235, 164, 185)
                         : Color(int.parse('0xff${color!.substring(1)}')),
                     discountImageColor: color == null || color == "#ffffff"
-                        ? AppColors.pink
+                        ? AppColors.primary
                         : Color(int.parse('0xff${color!.substring(1)}')),
                     discountTextColor: color == null || color == "#ffffff"
                         ? Colors.red[900]

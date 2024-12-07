@@ -27,7 +27,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextFieldWidget> {
       validator: widget.validator,
       appContext: context,
       textStyle: AppTextStyle.getBoldStyle(
-          color: AppColors.pink, fontSize: AppFontSize.size_13),
+          color: AppColors.primary, fontSize: AppFontSize.size_13),
       length: 4,
       controller: widget.pinCodeController,
       animationCurve: Curves.easeInOut,
@@ -50,7 +50,7 @@ class _PinCodeTextFieldState extends State<PinCodeTextFieldWidget> {
         activeFillColor: Colors.white,
         activeBorderWidth: 0,
         borderWidth: 0,
-        activeColor: AppColors.pink,
+        activeColor: AppColors.primary,
         errorBorderColor: Colors.transparent,
         disabledColor: Colors.transparent,
         inactiveColor: AppColors.grey9A,

@@ -28,7 +28,7 @@ class SettingRowWidget extends StatelessWidget {
                 Icon(
                   icon,
                   size: AppPaddingSize.padding_20,
-                  color: AppColors.pink,
+                  color: AppColors.primary,
                 ),
                 const SizedBox(width: AppPaddingSize.padding_10),
                 Expanded(
@@ -41,7 +41,7 @@ class SettingRowWidget extends StatelessWidget {
               ],
             ),
             const Divider(
-              color: AppColors.pink,
+              color: AppColors.primary,
               thickness: 1,
             )
           ],

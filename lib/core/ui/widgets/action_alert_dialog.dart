@@ -179,7 +179,7 @@ class ActionAlertDialog extends StatelessWidget {
                       ),
                       shape: const WidgetStatePropertyAll(
                           RoundedRectangleBorder(
-                              side: BorderSide(color: AppColors.pink),
+                              side: BorderSide(color: AppColors.primary),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)))),
                     ),
@@ -203,7 +203,7 @@ class ActionAlertDialog extends StatelessWidget {
                       style: ButtonStyle(
                         elevation: const WidgetStatePropertyAll(0),
                         backgroundColor: WidgetStatePropertyAll(
-                          confirmFillColor ?? AppColors.pink,
+                          confirmFillColor ?? AppColors.primary,
                         ),
                         shape: const WidgetStatePropertyAll(
                             RoundedRectangleBorder(
@@ -225,7 +225,6 @@ class ActionAlertDialog extends StatelessWidget {
               if (confirmWidget != null) confirmWidget!,
             ],
           ),
-        
         ],
       ),
     );

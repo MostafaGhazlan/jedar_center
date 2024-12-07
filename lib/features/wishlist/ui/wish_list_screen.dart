@@ -74,7 +74,7 @@ class _WishListScreenState extends State<WishListScreen> {
                               width: 200.w,
                               height: 100.h,
                               child: Shimmer.fromColors(
-                                baseColor: AppColors.pink,
+                                baseColor: AppColors.primary,
                                 highlightColor: AppColors.babyBlue,
                                 child: Image.asset(logoPngImage),
                               ),
@@ -119,7 +119,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                     width: 200.w,
                                     height: 100.h,
                                     child: Shimmer.fromColors(
-                                      baseColor: AppColors.pink,
+                                      baseColor: AppColors.primary,
                                       highlightColor: AppColors.babyBlue,
                                       child: Image.asset(logoPngImage),
                                     ),

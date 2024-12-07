@@ -2,12 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/boilerplate/get_model/widgets/get_model.dart';
 import 'package:flutter_application_1/core/boilerplate/pagination/models/get_list_request.dart';
-import 'package:flutter_application_1/core/classes/cashe_helper.dart';
 import 'package:flutter_application_1/core/constant/end_points/api_url.dart';
 import 'package:flutter_application_1/core/ui/widgets/search_delegate.dart';
 import 'package:flutter_application_1/core/utils/Navigation/navigation.dart';
-import 'package:flutter_application_1/features/auth/screen/login_screen.dart';
-import 'package:flutter_application_1/features/auth/screen/signup_screen.dart';
 import 'package:flutter_application_1/features/brand/cubit/brand_cubit.dart';
 import 'package:flutter_application_1/features/brand/data/model/brand.dart';
 import 'package:flutter_application_1/features/brand/screen/brand_screen.dart';
@@ -24,7 +21,6 @@ import '../../../core/constant/app_images/app_images.dart';
 import '../../../core/constant/text_styles/app_text_style.dart';
 import '../../../core/constant/text_styles/font_size.dart';
 import '../../../core/ui/widgets/carousel_slider.dart';
-import '../../../core/ui/widgets/custom_button.dart';
 import '../../../core/ui/widgets/double_back.dart';
 import '../../brand/screen/matrix_by_brand_screen.dart';
 import '../../matrix/screen/matrix_details_screen.dart';
@@ -84,83 +80,83 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SmartRefresher(
           header: const MaterialClassicHeader(
-            backgroundColor: AppColors.pink,
+            backgroundColor: AppColors.primary,
           ),
           controller: _refreshController,
           onRefresh: () => _onRefresh(context),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                CacheHelper.token == null
-                    ? Padding(
-                        padding: const EdgeInsets.all(AppPaddingSize.padding_5),
-                        child: Text(
-                          S.of(context).YOU_ARE_HERE,
-                          style: AppTextStyle.getBoldStyle(
-                            color: AppColors.pink,
-                            fontSize: AppFontSize.size_20,
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                CacheHelper.token == null
-                    ? Padding(
-                        padding: const EdgeInsets.all(AppPaddingSize.padding_5),
-                        child: Text(
-                          S.of(context).Hi,
-                          style: AppTextStyle.getSemiBoldStyle(
-                            color: AppColors.pink,
-                            fontSize: AppFontSize.size_20,
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                CacheHelper.token == null
-                    ? Padding(
-                        padding: const EdgeInsets.all(AppPaddingSize.padding_5),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          S.of(context).SignIn_title,
-                          style: AppTextStyle.getSemiBoldStyle(
-                            color: AppColors.black,
-                            fontSize: AppFontSize.size_18,
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                CacheHelper.token == null
-                    ? Padding(
-                        padding:
-                            const EdgeInsets.all(AppPaddingSize.padding_10),
-                        child: CustomButton(
-                          onPressed: () {
-                            Navigation.push(const LoginScreen());
-                          },
-                          text: S.of(context).SignIn,
-                          w: 200.h,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                CacheHelper.token == null
-                    ? Padding(
-                        padding: const EdgeInsets.all(AppPaddingSize.padding_5),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigation.push(const SignUpScreen());
-                          },
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            S.of(context).Create_Account,
-                            style: AppTextStyle.getSemiBoldStyle(
-                              color: AppColors.blueFace,
-                              fontSize: AppFontSize.size_16,
-                            ),
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
+                // CacheHelper.token == null
+                //     ? Padding(
+                //         padding: const EdgeInsets.all(AppPaddingSize.padding_5),
+                //         child: Text(
+                //           S.of(context).YOU_ARE_HERE,
+                //           style: AppTextStyle.getBoldStyle(
+                //             color: AppColors.primary,
+                //             fontSize: AppFontSize.size_20,
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox.shrink(),
+                // CacheHelper.token == null
+                //     ? Padding(
+                //         padding: const EdgeInsets.all(AppPaddingSize.padding_5),
+                //         child: Text(
+                //           S.of(context).Hi,
+                //           style: AppTextStyle.getSemiBoldStyle(
+                //             color: AppColors.primary,
+                //             fontSize: AppFontSize.size_20,
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox.shrink(),
+                // CacheHelper.token == null
+                //     ? Padding(
+                //         padding: const EdgeInsets.all(AppPaddingSize.padding_5),
+                //         child: Text(
+                //           textAlign: TextAlign.center,
+                //           maxLines: 3,
+                //           S.of(context).SignIn_title,
+                //           style: AppTextStyle.getSemiBoldStyle(
+                //             color: AppColors.black,
+                //             fontSize: AppFontSize.size_18,
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox.shrink(),
+                // CacheHelper.token == null
+                //     ? Padding(
+                //         padding:
+                //             const EdgeInsets.all(AppPaddingSize.padding_10),
+                //         child: CustomButton(
+                //           onPressed: () {
+                //             Navigation.push(const LoginScreen());
+                //           },
+                //           text: S.of(context).SignIn,
+                //           w: 200.h,
+                //         ),
+                //       )
+                //     : const SizedBox.shrink(),
+                // CacheHelper.token == null
+                //     ? Padding(
+                //         padding: const EdgeInsets.all(AppPaddingSize.padding_5),
+                //         child: TextButton(
+                //           onPressed: () {
+                //             Navigation.push(const SignUpScreen());
+                //           },
+                //           child: Text(
+                //             textAlign: TextAlign.center,
+                //             maxLines: 2,
+                //             S.of(context).Create_Account,
+                //             style: AppTextStyle.getSemiBoldStyle(
+                //               color: AppColors.blueFace,
+                //               fontSize: AppFontSize.size_16,
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     : const SizedBox.shrink(),
                 BlocBuilder<SliderBannerCubit, SliderBannerState>(
                   builder: (context, state) {
                     return SizedBox(
@@ -465,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(
                           bottom: AppPaddingSize.padding_10),
                       child: SizedBox(
-                        height: 346,
+                        height: 390,
                         child: PaginationList<MatrixModel>(
                           scrollDirection: Axis.horizontal,
                           withPagination: false,
