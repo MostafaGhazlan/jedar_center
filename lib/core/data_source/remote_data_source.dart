@@ -32,7 +32,7 @@ abstract class RemoteDataSource {
 
     headers.putIfAbsent("Content-Type", () => 'application/json');
     if (withAuthentication) {
-      checkToken();
+      await checkToken();
       final String token = CacheHelper.token ?? "";
       debugPrint(token);
       if (token != "") {
@@ -57,7 +57,7 @@ abstract class RemoteDataSource {
         converter2: converter2,
         converter: converter);
     debugPrint(response.toString()); //instanceModel
-      
+
     if (kDebugMode) {
       print('is right : ${response.isRight()}');
     }

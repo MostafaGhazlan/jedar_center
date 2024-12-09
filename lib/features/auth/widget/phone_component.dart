@@ -12,38 +12,47 @@ class PhoneComponentWidget extends StatelessWidget {
   final String title;
   final String hintText;
   final Function(String?) validator;
+  final Function(String)?
+      onPhoneWithCodeChanged; // وظيفة جديدة تجمع الرقم مع رمز البلد
   final Function(CountryCode?)? onChangedPhoneCode;
-  final Function(String?)? onChangedPhone;
   final String? initPhoneValue;
   final String? initPhoneCodeValue;
 
-  const PhoneComponentWidget(
-      {super.key,
-      required this.title,
-      required this.hintText,
-      required this.validator,
-      this.initPhoneValue,
-      this.initPhoneCodeValue,
-      this.onChangedPhoneCode,
-      this.onChangedPhone});
+  const PhoneComponentWidget({
+    super.key,
+    required this.title,
+    required this.hintText,
+    required this.validator,
+    this.initPhoneValue,
+    this.initPhoneCodeValue,
+    this.onPhoneWithCodeChanged,
+    this.onChangedPhoneCode,
+  });
 
   @override
   Widget build(BuildContext context) {
+    String? currentCountryCode = initPhoneCodeValue ?? '+964';
+
     return Column(
       children: [
         Align(
           alignment: AlignmentDirectional.topStart,
-          child: Text(title,
-              style: AppTextStyle.getSemiBoldStyle(
-                  color: AppColors.black14, fontSize: AppFontSize.size_13)),
+          child: Text(
+            title,
+            style: AppTextStyle.getSemiBoldStyle(
+              color: AppColors.black14,
+              fontSize: AppFontSize.size_13,
+            ),
+          ),
         ),
-        const SizedBox(
-          height: AppPaddingSize.padding_8,
-        ),
+        const SizedBox(height: AppPaddingSize.padding_8),
         CustomTextFormField(
           keyboardType: TextInputType.phone,
-          onChanged:
-              onChangedPhone != null ? (value) => onChangedPhone!(value) : null,
+          onChanged: (value) {
+            if (onPhoneWithCodeChanged != null) {
+              onPhoneWithCodeChanged!('$currentCountryCode$value');
+            }
+          },
           initValue: initPhoneValue,
           validator: (value) => validator(value),
           hintText: hintText,
@@ -54,24 +63,27 @@ class PhoneComponentWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: CountryCodePicker(
-                    onChanged: onChangedPhoneCode != null
-                        ? (value) => onChangedPhoneCode!(value)
-                        : null,
+                    onChanged: (value) {
+                      currentCountryCode = value.dialCode;
+                      if (onChangedPhoneCode != null) {
+                        onChangedPhoneCode!(value);
+                      }
+                    },
                     padding: EdgeInsets.zero,
                     countryList: elements,
                     showDropDownButton: false,
                     enabled: true,
-                    initialSelection: initPhoneCodeValue ?? 'IQ',
-                    favorite: const ['IQ'],
+                    initialSelection: initPhoneCodeValue ?? '+964',
+                    favorite: const ['+964'],
                     showCountryOnly: false,
                     showOnlyCountryWhenClosed: false,
                   ),
                 ),
-                const Icon(Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.grey9A),
-                const SizedBox(
-                  width: AppPaddingSize.padding_5,
+                const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.grey9A,
                 ),
+                const SizedBox(width: AppPaddingSize.padding_5),
                 SizedBox(
                   width: 0,
                   height: 35,
@@ -83,9 +95,7 @@ class PhoneComponentWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: AppPaddingSize.padding_16,
-        ),
+        const SizedBox(height: AppPaddingSize.padding_16),
       ],
     );
   }

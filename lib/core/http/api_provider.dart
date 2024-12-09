@@ -133,7 +133,7 @@ class ApiProvider {
             request: true,
             requestHeader: true,
             requestBody: true,
-            responseBody: false,
+            responseBody: true,
             responseHeader: false,
             error: true,
             compact: true,
@@ -173,7 +173,9 @@ class ApiProvider {
       final errorData = e.response?.data;
 
       if (errorData is Map<String, dynamic>) {
-        return Left(errorData.toString());
+        final errorMessage =
+            errorData['error']?['message'] ?? 'An error occurred';
+        return Left(errorMessage);
       }
 
       return Left(dioError.toString());

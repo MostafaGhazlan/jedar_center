@@ -111,12 +111,11 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 PhoneComponentWidget(
-                  onChangedPhoneCode: (value) {},
-                  onChangedPhone: (value) {
+                  onPhoneWithCodeChanged: (value) {
                     context.read<AuthCubit>().registerParams.phoneNumber =
-                        value.toString();
+                        value;
                   },
-                  initPhoneCodeValue: "IQ",
+                  initPhoneCodeValue: "+964",
                   validator: (value) =>
                       AppValidators.validateFillFields(context, value),
                   title: S.of(context).Phone,

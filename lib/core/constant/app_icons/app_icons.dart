@@ -57,3 +57,4 @@ const discountImage = '$iconBaseUrl/coupon.svg';
 const categoriesImage = '$iconBaseUrl/categories.svg';
 const shoppingBagImage = '$iconBaseUrl/shopping-bag.svg';
 const multipleImage = '$iconBaseUrl/multiple.svg';
+const backgroundRootImage = '$iconBaseUrl/background_root.svg';

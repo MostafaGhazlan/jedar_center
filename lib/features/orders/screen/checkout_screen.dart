@@ -7,6 +7,7 @@ import 'package:flutter_application_1/core/constant/app_padding/app_padding.dart
 import 'package:flutter_application_1/core/constant/text_styles/app_text_style.dart';
 import 'package:flutter_application_1/core/ui/widgets/custom_button.dart';
 import 'package:flutter_application_1/core/utils/Navigation/navigation.dart';
+import 'package:flutter_application_1/core/utils/functions/currency_formatter.dart';
 import 'package:flutter_application_1/features/orders/cubit/order_cubit.dart';
 import 'package:flutter_application_1/features/orders/data/models/order_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,15 +15,24 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/classes/keys.dart';
 import '../../../core/ui/dialogs/dialogs.dart';
+import '../../../core/ui/widgets/custom_text_form_field.dart';
 import '../../../core/utils/functions/app_validators.dart';
 import '../../../core/variables/variables.dart';
 import '../../../generated/l10n.dart';
 import '../../auth/widget/text_field_section.dart';
+import '../../cart/cubit/cart_cubit.dart';
 import 'order_screen.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   final double subTotal;
-  CheckoutScreen({super.key, required this.subTotal});
+  const CheckoutScreen({super.key, required this.subTotal});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  double? netAmount = 0;
 
   final MapController mapController = MapController();
 
@@ -72,7 +82,7 @@ class CheckoutScreen extends StatelessWidget {
                                           urlTemplate:
                                               "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                                           userAgentPackageName:
-                                              "jedar.hadetha.hbh",
+                                              "aastico.hadetha.hbh",
                                         ),
                                         MarkerLayer(
                                           markers: [
@@ -158,6 +168,130 @@ class CheckoutScreen extends StatelessWidget {
                       },
                       hintText: S.of(context).Enter_address,
                       title: S.of(context).Enter_address,
+                    ),
+                    BlocBuilder<CartCubit, CartState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                isScrollControlled: true,
+                                useSafeArea: true,
+                                enableDrag: false,
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero,
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                builder: (context) {
+                                  return SizedBox(
+                                    height: 100.h,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: CustomTextFormField(
+                                            onChanged: (value) {
+                                              context
+                                                  .read<CartCubit>()
+                                                  .docPromoCode = value;
+                                              context
+                                                  .read<CartCubit>()
+                                                  .updateState();
+                                            },
+                                            controller: context
+                                                .read<CartCubit>()
+                                                .promoController,
+                                            hintText: S.of(context).Enter_Code,
+                                            hintStyle:
+                                                AppTextStyle.getMediumStyle(
+                                                    color: AppColors.black),
+                                            textAlign: TextAlign.center,
+                                            borderColor: AppColors.primary,
+                                            keyboardType: const TextInputType
+                                                .numberWithOptions(),
+                                          ),
+                                        ),
+                                        CreateModel<OrderModel>(
+                                            onSuccess: (model) {
+                                              netAmount = model.netAmount ?? 0;
+                                              context
+                                                      .read<OrderCubit>()
+                                                      .discountType =
+                                                  model.discountType ?? 0;
+                                              context
+                                                      .read<OrderCubit>()
+                                                      .discountTypeAmount =
+                                                  model.discountTypeAmount ?? 0;
+                                              Dialogs.showSnackBar(
+                                                  message:
+                                                      "the promocode Actived Successfly");
+                                              context
+                                                  .read<CartCubit>()
+                                                  .docPromoCode = "";
+                                              context
+                                                  .read<CartCubit>()
+                                                  .updateState();
+                                              Navigation.pop();
+                                            },
+                                            onError: (val) {
+                                              Dialogs.showErrorSnackBar(
+                                                  message: val.toString());
+                                            },
+                                            useCaseCallBack: (model) {
+                                              return context
+                                                  .read<CartCubit>()
+                                                  .checkPromoCode();
+                                            },
+                                            withValidation: false,
+                                            child: CustomButton(
+                                              text: "Check",
+                                              w: 100.w,
+                                            ))
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: 200.w,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text("Add Promo Code",
+                                          style: AppTextStyle.getMediumStyle(
+                                              color: AppColors.white,
+                                              fontSize:
+                                                  AppPaddingSize.padding_15)),
+                                      const Spacer(),
+                                      context.read<CartCubit>().docPromoCode ==
+                                              ""
+                                          ? const SizedBox.shrink()
+                                          : const Icon(
+                                              Icons.circle,
+                                              color: AppColors.red,
+                                              size: AppPaddingSize.padding_10,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: AppPaddingSize.padding_10),
                     Padding(
@@ -291,7 +425,9 @@ class CheckoutScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(
                                     AppPaddingSize.padding_8),
                                 child: Text(
-                                  subTotal.toString(),
+                                  CurrencyFormatter.formatCurrency(
+                                      amount: widget.subTotal,
+                                      symbol: S.of(context).IQD),
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
                                       fontSize: AppPaddingSize.padding_15),
@@ -317,15 +453,23 @@ class CheckoutScreen extends StatelessWidget {
                                       fontSize: AppPaddingSize.padding_15),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(
-                                    AppPaddingSize.padding_8),
-                                child: Text(
-                                  "${subTotal + 2000}",
-                                  style: AppTextStyle.getMediumStyle(
-                                      color: AppColors.black,
-                                      fontSize: AppPaddingSize.padding_17),
-                                ),
+                              BlocBuilder<CartCubit, CartState>(
+                                builder: (context, state) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(
+                                        AppPaddingSize.padding_8),
+                                    child: Text(
+                                      CurrencyFormatter.formatCurrency(
+                                          amount: netAmount == 0
+                                              ? widget.subTotal + 2000
+                                              : netAmount ?? 0 + 2000,
+                                          symbol: S.of(context).IQD),
+                                      style: AppTextStyle.getMediumStyle(
+                                          color: AppColors.black,
+                                          fontSize: AppPaddingSize.padding_17),
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),

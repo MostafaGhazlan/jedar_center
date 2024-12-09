@@ -56,6 +56,7 @@ class CartCubit extends Cubit<CartState> {
   updateState() {
     emit(CartInitial());
   }
+ 
 
   clearAllCartIten() async {
     try {

@@ -166,8 +166,9 @@ class BuildResultSearch {
                                                                       .circle,
                                                                   border: Border
                                                                       .all(
-                                                                    color: AppColors
-                                                                        .primary,
+                                                                    color:
+                                                                        AppColors
+                                                                            .primary,
                                                                     width: 2,
                                                                   ),
                                                                   color: isChecked
@@ -416,8 +417,9 @@ class BuildResultSearch {
                                                                       .circle,
                                                                   border: Border
                                                                       .all(
-                                                                    color: AppColors
-                                                                        .primary,
+                                                                    color:
+                                                                        AppColors
+                                                                            .primary,
                                                                     width: 2,
                                                                   ),
                                                                   color: isChecked
@@ -635,8 +637,9 @@ class BuildResultSearch {
                                                                     .circle,
                                                                 border:
                                                                     Border.all(
-                                                                  color: AppColors
-                                                                      .primary,
+                                                                  color:
+                                                                      AppColors
+                                                                          .primary,
                                                                   width: 2,
                                                                 ),
                                                                 color: isChecked
@@ -844,11 +847,13 @@ class BuildResultSearch {
                                                       Column(
                                                         children: [
                                                           Text(
-                                                              S.of(context).Min,
+                                                              S
+                                                                  .of(
+                                                                      context)
+                                                                  .Min,
                                                               style: AppTextStyle.getMediumStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .black,
+                                                                  color: AppColors
+                                                                      .black,
                                                                   fontSize:
                                                                       AppPaddingSize
                                                                           .padding_12)),
@@ -867,14 +872,15 @@ class BuildResultSearch {
                                                       Column(
                                                         children: [
                                                           Text(
-                                                            S.of(context).Max,
-                                                            style: AppTextStyle
-                                                                .getMediumStyle(
-                                                                    color: AppColors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        AppPaddingSize
-                                                                            .padding_12),
+                                                            S
+                                                                .of(context)
+                                                                .Max,
+                                                            style: AppTextStyle.getMediumStyle(
+                                                                color: AppColors
+                                                                    .black,
+                                                                fontSize:
+                                                                    AppPaddingSize
+                                                                        .padding_12),
                                                           ),
                                                           const SizedBox(
                                                             height:
@@ -909,8 +915,7 @@ class BuildResultSearch {
                                                               .priceTo =
                                                           value.end.toInt();
                                                     },
-                                                    activeColor:
-                                                        AppColors.primary,
+                                                    activeColor: AppColors.primary,
                                                     min: 1000,
                                                     max: 300000,
                                                     divisions: 100,

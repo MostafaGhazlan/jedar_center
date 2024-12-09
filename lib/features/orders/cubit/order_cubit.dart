@@ -17,44 +17,45 @@ class OrderCubit extends Cubit<OrderState> {
   PaginationCubit? orderCubit;
   double subTotal = 0.0;
   double total = 0.0;
+  int discountType = 0;
+  double discountTypeAmount = 0.0;
   OrderCubit() : super(OrderInitial());
-CreateOrderParams? createOrderParams;
+  CreateOrderParams? createOrderParams;
 
-Future<Result> createOrder() async {
-  if (CacheHelper.cartItem == null || CacheHelper.cartItem!.isEmpty) {
-    return Future.error("Cart is empty");
-  }
+  Future<Result> createOrder() async {
+    if (CacheHelper.cartItem == null || CacheHelper.cartItem!.isEmpty) {
+      return Future.error("Cart is empty");
+    }
 
-  List<OrderDetailParams> details = CacheHelper.cartItem!.map((item) {
-    return OrderDetailParams(
-      productId: item.id.toString(),
-      unitId: item.sUoMEntry!.toInt(),
-      pQty: item.quantity,
-      numPerMsr: item.numInSale!.toInt(),
-      priceBefDis: item.productPrice!.addPrice1!,
-      discountType: 0,
-      discountTypeAmount: 0,
+    List<OrderDetailParams> details = CacheHelper.cartItem!.map((item) {
+      return OrderDetailParams(
+        productId: item.id.toString(),
+        unitId: item.sUoMEntry!.toInt(),
+        pQty: item.quantity,
+        numPerMsr: item.numInSale!.toInt(),
+        priceBefDis: item.productPrice!.addPrice1!,
+        discountType: discountType,
+        discountTypeAmount: discountTypeAmount,
+        note: "",
+      );
+    }).toList();
+
+    createOrderParams = CreateOrderParams(
+      address: CacheHelper.currentUserInfo?.address ?? "",
+      businessPartnerId: CacheHelper.currentUserInfo?.id ?? "",
+      discountType: discountType,
+      discountTypeAmount: discountTypeAmount,
+      latitude: CacheHelper.currentUserInfo?.latitude ?? "",
+      longitude: CacheHelper.currentUserInfo?.longitude ?? "",
       note: "",
+      phone1: CacheHelper.currentUserInfo?.phoneNumber ?? "7777777777",
+      phone2: CacheHelper.currentUserInfo?.mobile ?? "",
+      details: details,
     );
-  }).toList();
 
-  createOrderParams = CreateOrderParams(
-    address: CacheHelper.currentUserInfo?.address ?? "",
-    businessPartnerId: CacheHelper.currentUserInfo?.id ?? "",
-    discountType: 0,
-    discountTypeAmount: 0,
-    latitude: CacheHelper.currentUserInfo?.latitude ?? "",
-    longitude: CacheHelper.currentUserInfo?.longitude ?? "",
-    note: "",
-    phone1: CacheHelper.currentUserInfo?.phoneNumber ?? "7777777777",
-    phone2: CacheHelper.currentUserInfo?.mobile ?? "",
-    details: details,
-  );
-
-  return CreateOrderUsecase(OrderRepository())
-      .call(params: createOrderParams!);
-}
-
+    return CreateOrderUsecase(OrderRepository())
+        .call(params: createOrderParams!);
+  }
 
   Future<Result> getCurrentOrdersOrder(data) async {
     return await GetCurrentOrdersUsecase(OrderRepository())

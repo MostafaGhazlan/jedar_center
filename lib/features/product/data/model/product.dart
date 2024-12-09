@@ -114,14 +114,12 @@ class ProductModel {
     this.isFavorite = false,
     this.isLoading = false,
   });
-
-     Map<String, dynamic> get parsedDescription {
+   Map<String, dynamic> get parsedDescription {
     if (description != null) {
       return jsonDecode(description!);
     }
     return {};
   }
-
   ProductModel.fromJson(Map<String, dynamic> json)
     : quantity = json['quantity'] ?? 1 {
     id = json['id'];

@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/constant/app_colors/app_colors.dart';
 import '../../../core/constant/app_icons/app_icons.dart';
-import '../../../core/constant/app_images/app_images.dart';
 import '../../../core/constant/app_padding/app_padding.dart';
 import '../../../core/constant/text_styles/app_text_style.dart';
 import '../../../core/constant/text_styles/font_size.dart';
@@ -29,7 +28,7 @@ class RootScreen extends StatelessWidget {
           bottomNavigationBar: Stack(
             children: [
               Positioned.fill(
-                child: Image.asset(
+                child: SvgPicture.asset(
                   backgroundRootImage,
                   fit: BoxFit.cover,
                 ),

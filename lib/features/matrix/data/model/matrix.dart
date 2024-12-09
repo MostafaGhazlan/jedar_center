@@ -57,6 +57,22 @@ class MatrixModel {
     }
   }
 
+  // تحويل الكائن إلى خريطة (JSON)
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'matrixName': matrixName,
+      'matrixNameEn': matrixNameEn,
+      'imageName': imageName,
+      'categoryId': categoryId,
+      'matrixTypeId': matrixTypeId,
+      'notes': notes,
+      'info': info,
+      'productCount': productCount,
+      'products': products?.map((e) => e.toJson()).toList(),
+    };
+  }
+
   @override
   String toString() {
     return 'MatrixModel{id: $id, matrixName: $matrixName, matrixNameEn: $matrixNameEn, imageName: $imageName, categoryId: $categoryId, matrixTypeId: $matrixTypeId, notes: $notes, info: $info, productCount: $productCount, product: $products}';
