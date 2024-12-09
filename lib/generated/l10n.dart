@@ -420,10 +420,10 @@ class S {
     );
   }
 
-  /// `Enter the discount code`
+  /// `Enter the Promocode`
   String get Enter_Code {
     return Intl.message(
-      'Enter the discount code',
+      'Enter the Promocode',
       name: 'Enter_Code',
       desc: '',
       args: [],
@@ -1215,6 +1215,56 @@ class S {
     return Intl.message(
       'Success',
       name: 'Success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fill field`
+  String get fill_field {
+    return Intl.message(
+      'fill field',
+      name: 'fill_field',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `must be same as password`
+  String get must_same_password {
+    return Intl.message(
+      'must be same as password',
+      name: 'must_same_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The code entered is incorrect, please try again.`
+  String get code_incorrect {
+    return Intl.message(
+      'The code entered is incorrect, please try again.',
+      name: 'code_incorrect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shipping Addres`
+  String get Shipping_Addres {
+    return Intl.message(
+      'Shipping Addres',
+      name: 'Shipping_Addres',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the promocode Actived Successfly`
+  String get promocode_Successfly {
+    return Intl.message(
+      'the promocode Actived Successfly',
+      name: 'promocode_Successfly',
       desc: '',
       args: [],
     );

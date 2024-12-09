@@ -115,7 +115,17 @@
     "Payment_Summary":"ملخص الدفع",
     "Submet":"تم",
     "Please_Login_First":"يرجى تسجيل الدخول أولا",
-    "Success":"تمت العملية بنجاح"
+    "Success":"تمت العملية بنجاح",
+    "fill_field":"قم بتعبئة الحقل",
+    "must_same_password":"يجب أن تكون نفس كلمة المرور",
+    "code_incorrect":"الكود المدخل غير صحيح، يرجى المحاولة مرة أخرى.",
+    "Shipping_Addres":"العنوان",
+    "promocode_Successfly":"تم تطبيق الخصم بنجاح"
+
+
+
+
+
 
 
 

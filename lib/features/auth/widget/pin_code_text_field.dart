@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/ui/dialogs/dialogs.dart';
+import 'package:flutter_application_1/generated/l10n.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_application_1/core/constant/text_styles/app_text_style.dart';
@@ -8,13 +10,16 @@ import '../../../core/constant/app_colors/app_colors.dart';
 
 class PinCodeTextFieldWidget extends StatefulWidget {
   final VoidCallback? whenDone;
+  final int? verificationCode;
+
   final String? Function(String?)? validator;
   final TextEditingController pinCodeController;
   const PinCodeTextFieldWidget(
       {super.key,
       required this.pinCodeController,
       this.validator,
-      this.whenDone});
+      this.whenDone,
+      this.verificationCode});
 
   @override
   State<PinCodeTextFieldWidget> createState() => _PinCodeTextFieldState();
@@ -38,8 +43,14 @@ class _PinCodeTextFieldState extends State<PinCodeTextFieldWidget> {
       keyboardType: TextInputType.number,
       enableActiveFill: true,
       onChanged: (value) {
-        if (value.characters.length == 6 && widget.whenDone != null) {
-          widget.whenDone!();
+        if (value.characters.length == 4) {
+          if (int.tryParse(value) == widget.verificationCode) {
+            if (widget.whenDone != null) {
+              widget.whenDone!();
+            }
+          } else {
+            Dialogs.showErrorSnackBar(message: S.of(context).code_incorrect);
+          }
         }
       },
       pinTheme: PinTheme(

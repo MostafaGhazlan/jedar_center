@@ -15,6 +15,7 @@ import '../../../core/constant/text_styles/font_size.dart';
 import '../../../core/utils/functions/currency_formatter.dart';
 import '../../../generated/l10n.dart';
 import '../../matrix/cubit/matrix_cubit.dart';
+import '../../matrix/screen/matrix_details_screen.dart';
 
 class CartCard extends StatelessWidget {
   final Function()? whenSuccess;
@@ -34,9 +35,9 @@ class CartCard extends StatelessWidget {
     return BlocBuilder<MatrixCubit, MatrixState>(builder: (context, state) {
       return InkWell(
         onTap: () {
-          // Navigation.push(ProductDetailsScreen(
-          //   model: context.read<MatrixCubit>().matrix!,
-          // ));
+          Navigation.push(ProductDetailsScreen(
+            model: context.read<MatrixCubit>().matrix!,
+          ));
         },
         child: Card(
           color: AppColors.white,
@@ -97,10 +98,9 @@ class CartCard extends StatelessWidget {
                                   dialogTitle:
                                       S.of(context).Confirm_deletion_title,
                                   message: S.of(context).Confirm_deletion,
-                                  image: matrixModel.documents != null &&
-                                          matrixModel.documents!.isNotEmpty
-                                      ? "$baseUrl${matrixModel.documents!.first.filePath}/${matrixModel.documents!.first.fileName}"
-                                      : logoPngImage, onConfirm: () async {
+                                  image:
+                                      "$baseUrl${matrixModel.documents?.first.filePath}/${matrixModel.documents?.first.fileName}",
+                                  onConfirm: () async {
                                 await CacheHelper.cartBox.deleteAt(
                                   CacheHelper.cartBox.values
                                       .toList()
@@ -117,7 +117,7 @@ class CartCard extends StatelessWidget {
                             icon: Icon(
                               Icons.delete,
                               color: AppColors.red,
-                              size: 10.r,
+                              size: 14.r,
                             ),
                           ),
                         ),

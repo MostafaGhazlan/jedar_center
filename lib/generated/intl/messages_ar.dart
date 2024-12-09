@@ -116,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "See_more": MessageLookupByLibrary.simpleMessage("مشاهدة المزيد"),
         "Service_Fees": MessageLookupByLibrary.simpleMessage("رسوم الخدمة"),
         "Settings": MessageLookupByLibrary.simpleMessage("اعدادات"),
+        "Shipping_Addres": MessageLookupByLibrary.simpleMessage("العنوان"),
         "Shopping": MessageLookupByLibrary.simpleMessage("الأقسام"),
         "SignIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "SignIn_title": MessageLookupByLibrary.simpleMessage(
@@ -144,17 +145,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "changed": MessageLookupByLibrary.simpleMessage("تم تغييره بنجاح"),
         "click_here": MessageLookupByLibrary.simpleMessage(
             "انقر هنا لرؤية المزيد من منتجات هذه العلامة التجارية"),
+        "code_incorrect": MessageLookupByLibrary.simpleMessage(
+            "الكود المدخل غير صحيح، يرجى المحاولة مرة أخرى."),
         "description": MessageLookupByLibrary.simpleMessage("الشرح"),
         "dont_Have_Account":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب!؟"),
         "error_search": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء البحث. حاول مجددًا."),
+        "fill_field": MessageLookupByLibrary.simpleMessage("قم بتعبئة الحقل"),
         "how_use_it": MessageLookupByLibrary.simpleMessage("كيفية استخدامها"),
+        "must_same_password":
+            MessageLookupByLibrary.simpleMessage("يجب أن تكون نفس كلمة المرور"),
         "not_verfied":
             MessageLookupByLibrary.simpleMessage("لم يتم التحقق منك"),
         "password_successfully": MessageLookupByLibrary.simpleMessage(
             "تمت إضافة كلمة المرور الخاصة بك بنجاح"),
         "profile": MessageLookupByLibrary.simpleMessage("حسابي"),
+        "promocode_Successfly":
+            MessageLookupByLibrary.simpleMessage("تم تطبيق الخصم بنجاح"),
         "remove": MessageLookupByLibrary.simpleMessage("إزالة الكل"),
         "send_code_success":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),

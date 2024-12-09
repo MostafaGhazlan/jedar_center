@@ -8,6 +8,7 @@ import 'package:flutter_application_1/core/constant/text_styles/app_text_style.d
 import 'package:flutter_application_1/core/ui/widgets/back_widget.dart';
 import 'package:flutter_application_1/core/ui/widgets/custom_button.dart';
 import 'package:flutter_application_1/core/utils/Navigation/navigation.dart';
+import 'package:flutter_application_1/core/utils/functions/currency_formatter.dart';
 import 'package:flutter_application_1/features/auth/screen/login_screen.dart';
 import 'package:flutter_application_1/features/cart/cubit/cart_cubit.dart';
 import 'package:flutter_application_1/features/cart/widget/cart_card.dart';
@@ -178,9 +179,10 @@ class CartScreen extends StatelessWidget {
                             ));
                           }
                         },
-                        h: 30.h,
-                        w: 50.w,
+                        h: 40.h,
+                        w: 200.w,
                         text: S.of(context).Confirm,
+                        radius: 50,
                       ),
                       Padding(
                         padding:
@@ -201,8 +203,24 @@ class CartScreen extends StatelessWidget {
                               builder: (context, state) {
                                 return Text(
                                   netAmount == 0
-                                      ? "${CacheHelper.cartItem?.fold<int>(0, (previousValue, element) => previousValue + ((element.productPrice?.addPrice1 ?? 0) * (element.quantity)).toInt())} ${S.of(context).IQD}"
-                                      : "$netAmount",
+                                      ? CurrencyFormatter.formatCurrency(
+                                          amount: CacheHelper.cartItem
+                                                  ?.fold<double>(
+                                                0.0,
+                                                (previousValue, element) =>
+                                                    previousValue +
+                                                    ((element.productPrice
+                                                                    ?.addPrice1 ??
+                                                                0) *
+                                                            (element.quantity))
+                                                        .toDouble(),
+                                              ) ??
+                                              0.0,
+                                          symbol: S.of(context).IQD,
+                                        )
+                                      : CurrencyFormatter.formatCurrency(
+                                          amount: netAmount,
+                                          symbol: S.of(context).IQD),
                                   style: AppTextStyle.getMediumStyle(
                                     color: AppColors.black,
                                     fontSize: AppPaddingSize.padding_12,

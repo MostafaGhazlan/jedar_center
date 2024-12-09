@@ -62,7 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Email": MessageLookupByLibrary.simpleMessage("Email"),
         "English": MessageLookupByLibrary.simpleMessage("English"),
         "Enter_Code":
-            MessageLookupByLibrary.simpleMessage("Enter the discount code"),
+            MessageLookupByLibrary.simpleMessage("Enter the Promocode"),
         "Enter_address":
             MessageLookupByLibrary.simpleMessage("Enter your Address"),
         "Enter_confirmed_password": MessageLookupByLibrary.simpleMessage(
@@ -123,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "See_more": MessageLookupByLibrary.simpleMessage("See more"),
         "Service_Fees": MessageLookupByLibrary.simpleMessage("Service Fees"),
         "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "Shipping_Addres":
+            MessageLookupByLibrary.simpleMessage("Shipping Addres"),
         "Shopping": MessageLookupByLibrary.simpleMessage("Category"),
         "SignIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "SignIn_title": MessageLookupByLibrary.simpleMessage(
@@ -154,17 +156,24 @@ class MessageLookup extends MessageLookupByLibrary {
             "has been changed Successfully"),
         "click_here": MessageLookupByLibrary.simpleMessage(
             "click here to see more product of this brand"),
+        "code_incorrect": MessageLookupByLibrary.simpleMessage(
+            "The code entered is incorrect, please try again."),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "dont_Have_Account":
             MessageLookupByLibrary.simpleMessage("dont Have Account!?"),
         "error_search": MessageLookupByLibrary.simpleMessage(
             "An error occurred while searching. Try again."),
+        "fill_field": MessageLookupByLibrary.simpleMessage("fill field"),
         "how_use_it": MessageLookupByLibrary.simpleMessage("how use it"),
+        "must_same_password":
+            MessageLookupByLibrary.simpleMessage("must be same as password"),
         "not_verfied":
             MessageLookupByLibrary.simpleMessage("you are not verfied"),
         "password_successfully": MessageLookupByLibrary.simpleMessage(
             "your password has been added successfully"),
         "profile": MessageLookupByLibrary.simpleMessage("profile"),
+        "promocode_Successfly": MessageLookupByLibrary.simpleMessage(
+            "the promocode Actived Successfly"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove all"),
         "send_code_success":
             MessageLookupByLibrary.simpleMessage("Code Send Successfully"),

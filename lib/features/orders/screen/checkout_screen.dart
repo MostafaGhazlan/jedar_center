@@ -19,7 +19,6 @@ import '../../../core/ui/widgets/custom_text_form_field.dart';
 import '../../../core/utils/functions/app_validators.dart';
 import '../../../core/variables/variables.dart';
 import '../../../generated/l10n.dart';
-import '../../auth/widget/text_field_section.dart';
 import '../../cart/cubit/cart_cubit.dart';
 import 'order_screen.dart';
 
@@ -41,7 +40,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       backgroundColor: AppColors.evenLighterBackground,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.transparent,
         title: Text(
           S.of(context).Checkout,
           style: AppTextStyle.getBoldStyle(
@@ -60,7 +62,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     currentLocation == null
                         ? const SizedBox.shrink()
                         : SizedBox(
-                            height: 300.h,
+                            height: 250.h,
                             child: Card(
                               color: AppColors.white,
                               child: Column(
@@ -99,225 +101,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                      height: AppPaddingSize.padding_10),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.location_pin,
-                                        color: AppColors.black,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(
-                                                AppPaddingSize.padding_8),
-                                            child: Text(
-                                              CacheHelper.currentUserInfo
-                                                      ?.address ??
-                                                  "Address",
-                                              style:
-                                                  AppTextStyle.getMediumStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: AppPaddingSize
-                                                          .padding_19),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(
-                                                AppPaddingSize.padding_8),
-                                            child: Text(
-                                              CacheHelper.currentUserInfo
-                                                      ?.phoneNumber ??
-                                                  "phone",
-                                              style:
-                                                  AppTextStyle.getMediumStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: AppPaddingSize
-                                                          .padding_19),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Padding(
-                                        padding: const EdgeInsets.all(
-                                            AppPaddingSize.padding_8),
-                                        child: Text(
-                                          "Change",
-                                          style: AppTextStyle.getMediumStyle(
-                                              color: AppColors.orange,
-                                              fontSize:
-                                                  AppPaddingSize.padding_19),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),
                           ),
                     const SizedBox(height: AppPaddingSize.padding_10),
-                    TextFieldSection(
-                      validator: (value) =>
-                          AppValidators.validateFillFields(context, value),
-                      onChanged: (p0) {
-                        CacheHelper.currentUserInfo?.address = p0;
-                      },
-                      hintText: S.of(context).Enter_address,
-                      title: S.of(context).Enter_address,
-                    ),
-                    BlocBuilder<CartCubit, CartState>(
-                      builder: (context, state) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                isScrollControlled: true,
-                                useSafeArea: true,
-                                enableDrag: false,
-                                context: context,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                builder: (context) {
-                                  return SizedBox(
-                                    height: 100.h,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: CustomTextFormField(
-                                            onChanged: (value) {
-                                              context
-                                                  .read<CartCubit>()
-                                                  .docPromoCode = value;
-                                              context
-                                                  .read<CartCubit>()
-                                                  .updateState();
-                                            },
-                                            controller: context
-                                                .read<CartCubit>()
-                                                .promoController,
-                                            hintText: S.of(context).Enter_Code,
-                                            hintStyle:
-                                                AppTextStyle.getMediumStyle(
-                                                    color: AppColors.black),
-                                            textAlign: TextAlign.center,
-                                            borderColor: AppColors.primary,
-                                            keyboardType: const TextInputType
-                                                .numberWithOptions(),
-                                          ),
-                                        ),
-                                        CreateModel<OrderModel>(
-                                            onSuccess: (model) {
-                                              netAmount = model.netAmount ?? 0;
-                                              context
-                                                      .read<OrderCubit>()
-                                                      .discountType =
-                                                  model.discountType ?? 0;
-                                              context
-                                                      .read<OrderCubit>()
-                                                      .discountTypeAmount =
-                                                  model.discountTypeAmount ?? 0;
-                                              Dialogs.showSnackBar(
-                                                  message:
-                                                      "the promocode Actived Successfly");
-                                              context
-                                                  .read<CartCubit>()
-                                                  .docPromoCode = "";
-                                              context
-                                                  .read<CartCubit>()
-                                                  .updateState();
-                                              Navigation.pop();
-                                            },
-                                            onError: (val) {
-                                              Dialogs.showErrorSnackBar(
-                                                  message: val.toString());
-                                            },
-                                            useCaseCallBack: (model) {
-                                              return context
-                                                  .read<CartCubit>()
-                                                  .checkPromoCode();
-                                            },
-                                            withValidation: false,
-                                            child: CustomButton(
-                                              text: "Check",
-                                              w: 100.w,
-                                            ))
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              width: 200.w,
-                              decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text("Add Promo Code",
-                                          style: AppTextStyle.getMediumStyle(
-                                              color: AppColors.white,
-                                              fontSize:
-                                                  AppPaddingSize.padding_15)),
-                                      const Spacer(),
-                                      context.read<CartCubit>().docPromoCode ==
-                                              ""
-                                          ? const SizedBox.shrink()
-                                          : const Icon(
-                                              Icons.circle,
-                                              color: AppColors.red,
-                                              size: AppPaddingSize.padding_10,
-                                            )
-                                    ],
-                                  ),
-                                ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.greyAD)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(
+                                  AppPaddingSize.padding_8),
+                              child: Text(
+                                S.of(context).Pay_through,
+                                style: AppTextStyle.getBoldStyle(
+                                    color: AppColors.black,
+                                    fontSize: AppPaddingSize.padding_13),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: AppPaddingSize.padding_10),
-                    Padding(
-                      padding: const EdgeInsets.all(AppPaddingSize.padding_8),
-                      child: Text(
-                        S.of(context).Pay_through,
-                        style: AppTextStyle.getBoldStyle(
-                            color: AppColors.black,
-                            fontSize: AppPaddingSize.padding_19),
-                      ),
-                    ),
-                    const SizedBox(height: AppPaddingSize.padding_10),
-                    Card(
-                      color: AppColors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(
-                                  AppPaddingSize.padding_10),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: AppPaddingSize.padding_10,
+                                  left: AppPaddingSize.padding_10,
+                                  right: AppPaddingSize.padding_10),
                               child: Row(
                                 children: [
                                   const Icon(
                                     Icons.money,
-                                    size: AppPaddingSize.padding_20,
+                                    size: AppPaddingSize.padding_12,
                                   ),
                                   const SizedBox(
                                       width: AppPaddingSize.padding_10),
@@ -325,37 +142,156 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     S.of(context).Cash_payment,
                                     style: AppTextStyle.getMediumStyle(
                                         color: AppColors.black,
-                                        fontSize: AppPaddingSize.padding_17),
+                                        fontSize: AppPaddingSize.padding_13),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.all(AppPaddingSize.padding_8),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  AppPaddingSize.padding_20),
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 500),
-                                height: AppPaddingSize.padding_20,
-                                width: AppPaddingSize.padding_20,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  border: Border.all(
-                                    color: AppColors.white,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppPaddingSize.padding_20),
-                                ),
-                                child: const SizedBox.shrink(),
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.greyAD)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(
+                                  AppPaddingSize.padding_8),
+                              child: Text(
+                                S.of(context).Shipping_Addres,
+                                style: AppTextStyle.getBoldStyle(
+                                    color: AppColors.black,
+                                    fontSize: AppPaddingSize.padding_13),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    S.of(context).User_Name,
+                                    style: AppTextStyle.getMediumStyle(
+                                        color: AppColors.grey72,
+                                        fontSize: AppPaddingSize.padding_13),
+                                  ),
+                                  Text(
+                                    CacheHelper.currentUserInfo?.name ?? "Name",
+                                    style: AppTextStyle.getMediumStyle(
+                                        color: AppColors.black,
+                                        fontSize: AppPaddingSize.padding_13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    S.of(context).Shipping_Addres,
+                                    style: AppTextStyle.getMediumStyle(
+                                        color: AppColors.grey72,
+                                        fontSize: AppPaddingSize.padding_13),
+                                  ),
+                                  const SizedBox(
+                                    width: AppPaddingSize.padding_5,
+                                  ),
+                                  Expanded(
+                                    child: CustomTextFormField(
+                                      textAlign: TextAlign.center,
+                                      hintText: S.of(context).Enter_address,
+                                      onChanged: (value) {
+                                        CacheHelper.currentUserInfo?.address =
+                                            value;
+                                      },
+                                      validator: (value) {
+                                        return AppValidators.validateFillFields(
+                                            context, value);
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          onChanged: (value) {
+                            context.read<CartCubit>().docPromoCode = value;
+                            context.read<CartCubit>().updateState();
+                          },
+                          controller: context.read<CartCubit>().promoController,
+                          decoration: InputDecoration(
+                              hintStyle: AppTextStyle.getMediumStyle(
+                                  color: AppColors.black),
+                              labelText: S.of(context).Enter_Code,
+                              floatingLabelBehavior: FloatingLabelBehavior.auto,
+                              border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                borderSide: BorderSide(
+                                  color: AppColors.greyAD,
+                                  width: 2.0,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                borderSide: BorderSide(
+                                  color: AppColors.greyAD,
+                                  width: 2.0,
+                                ),
+                              ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CreateModel<OrderModel>(
+                                  onSuccess: (model) {
+                                    netAmount = model.netAmount ?? 0;
+                                    context.read<OrderCubit>().discountType =
+                                        model.discountType ?? 0;
+                                    context
+                                            .read<OrderCubit>()
+                                            .discountTypeAmount =
+                                        model.discountTypeAmount ?? 0;
+                                    Dialogs.showSnackBar(
+                                        message:
+                                            S.of(context).promocode_Successfly);
+                                    context.read<CartCubit>().docPromoCode = "";
+                                    context.read<CartCubit>().updateState();
+                                  },
+                                  onError: (val) {
+                                    Dialogs.showErrorSnackBar(
+                                        message: val.toString());
+                                  },
+                                  useCaseCallBack: (model) {
+                                    return context
+                                        .read<CartCubit>()
+                                        .checkPromoCode();
+                                  },
+                                  withValidation: false,
+                                  child: Text(
+                                    S.of(context).Apply,
+                                    style: AppTextStyle.getBoldStyle(
+                                        color: AppColors.primary,
+                                        fontSize: AppPaddingSize.padding_13),
+                                  ),
+                                ),
+                              )),
+                        )),
                     const SizedBox(height: AppPaddingSize.padding_10),
                     Padding(
                       padding: const EdgeInsets.all(AppPaddingSize.padding_8),
@@ -363,7 +299,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         S.of(context).Payment_Summary,
                         style: AppTextStyle.getBoldStyle(
                             color: AppColors.black,
-                            fontSize: AppPaddingSize.padding_19),
+                            fontSize: AppPaddingSize.padding_17),
                       ),
                     ),
                     const SizedBox(height: AppPaddingSize.padding_10),
@@ -381,7 +317,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   S.of(context).Subtotal,
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               Padding(
@@ -391,7 +327,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   S.of(context).Delivery_Charges,
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               Padding(
@@ -401,7 +337,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   S.of(context).Service_Fees,
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               Padding(
@@ -430,7 +366,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       symbol: S.of(context).IQD),
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               Padding(
@@ -440,7 +376,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   "1000 ${S.of(context).IQD}",
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               Padding(
@@ -450,7 +386,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   "1000 ${S.of(context).IQD}",
                                   style: AppTextStyle.getMediumStyle(
                                       color: AppColors.greyA4,
-                                      fontSize: AppPaddingSize.padding_15),
+                                      fontSize: AppPaddingSize.padding_13),
                                 ),
                               ),
                               BlocBuilder<CartCubit, CartState>(
@@ -486,6 +422,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               },
               withValidation: true,
               onSuccess: (OrderModel model) async {
+                context.read<CartCubit>().docPromoCode = "";
                 await CacheHelper.cartBox.clear();
                 if (context.mounted) {
                   Dialogs.showSnackBar(
@@ -493,7 +430,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     typeSnackBar: AnimatedSnackBarType.success,
                   );
                 }
-
                 CacheHelper.cartBox.clear();
                 CacheHelper.cartItem?.clear();
                 Navigation.pushReplacement(const OrderScreen());
@@ -511,7 +447,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 }
               },
               child: CustomButton(
-                text: S.of(context).Submet,
+                text: S.of(context).Checkout,
               ),
             ),
           ],

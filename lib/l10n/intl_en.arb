@@ -36,7 +36,7 @@
     "Cart_Empty":"Your Cart Is Empty",
     "Total":"Total",
     "Discount_Value":"Discount Value",
-    "Enter_Code":"Enter the discount code",
+    "Enter_Code":"Enter the Promocode",
     "Apply_Code":"Apply Code",
     "Net_Total":"Net Total: ",
     "Pay":"Pay",
@@ -115,7 +115,13 @@
     "Payment_Summary":"Payment Summary",
     "Submet":"Submet",
     "Please_Login_First":"Please Login First",
-    "Success":"Success"
+    "Success":"Success",
+    "fill_field":"fill field",
+    "must_same_password":"must be same as password",
+    "code_incorrect":"The code entered is incorrect, please try again.",
+    "Shipping_Addres":"Shipping Addres",
+    "promocode_Successfly":"the promocode Actived Successfly"
+
 
 
 

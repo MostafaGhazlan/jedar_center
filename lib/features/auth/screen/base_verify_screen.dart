@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_application_1/core/boilerplate/create_model/cubits/create_model_cubit.dart';
 import 'package:flutter_application_1/core/constant/app_padding/app_padding.dart';
@@ -12,11 +13,14 @@ import 'package:flutter_application_1/core/ui/widgets/custom_button.dart';
 import '../../../core/boilerplate/create_model/widgets/create_model.dart';
 import '../../../core/constant/app_colors/app_colors.dart';
 import '../../../generated/l10n.dart';
+import '../cubit/auth_cubit.dart';
+import '../data/model/register_model.dart';
 import '../widget/logo_head_widget.dart';
 import '../widget/pin_code_text_field.dart';
 
 class BaseVerifyScreen extends StatefulWidget {
   final String title;
+  final int? verificationCode;
   final sendCodeUseCase;
   final sendCodeCall;
   final verifyCodeUseCase;
@@ -25,7 +29,8 @@ class BaseVerifyScreen extends StatefulWidget {
       required this.title,
       this.sendCodeUseCase,
       this.verifyCodeUseCase,
-      this.sendCodeCall});
+      this.sendCodeCall,
+      this.verificationCode});
 
   @override
   State<BaseVerifyScreen> createState() => _BaseVerifyScreenState();
@@ -86,6 +91,7 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 26),
                         child: PinCodeTextFieldWidget(
+                          verificationCode: widget.verificationCode,
                           pinCodeController: controller!,
                           whenDone: () {
                             createModelCubit!.createModel();
@@ -143,16 +149,15 @@ class _BaseVerifyScreenState extends State<BaseVerifyScreen> {
                             typeSnackBar: AnimatedSnackBarType.error,
                           );
                         },
-                        onSuccess: (model) async {
-                          Dialogs.showErrorSnackBar(
-                            message: S.of(context).changed,
-                            typeSnackBar: AnimatedSnackBarType.success,
-                          );
+                        onSuccess: (RegisterModel model) async {
+                          Dialogs.showSnackBar(
+                              message: "Registe Success",
+                              typeSnackBar: AnimatedSnackBarType.success);
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },
                         useCaseCallBack: (model) {
-                          return null;
+                          return context.read<AuthCubit>().sigup();
                         },
                         withValidation: false,
                         child: CustomButton(
